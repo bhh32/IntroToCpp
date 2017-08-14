@@ -36,7 +36,7 @@ int main()
 	cout << "" << endl;
 	
 	// For loop that prints 5 - 0
-	for (int i = 5; i > - 1; --i)
+	for (int i = 5; i > -1; --i)
 	{
 		// Prints current value of i to screen
 		cout << i << endl;
@@ -82,6 +82,7 @@ int main()
 	// Skip a line
 	cout << "" << endl;
 
+	// Pauses the system and waits for user input
 	system("pause");
 
 	// Skip a line
@@ -102,6 +103,7 @@ int main()
 	// Skip a line
 	cout << "" << endl;
 
+	// Pauses the system and waits for user input
 	system("pause");
 
 	// Ends the program
