@@ -1,39 +1,40 @@
 #include <iostream>
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 int main()
 {
 	// Prints 'Hello AIE' to the console
-	cout << "Hello AIE" << endl;
+	cout << "Hello AIE\n";
 
 	// Skips a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// Pauses the system and waits for user input
 	system("pause");
 
 	// Skips a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// Prints a list of tracks on their own line
-	cout << "Five Finger Death Punch - House of the Rising Sun" << endl;
-	cout << "Five Finger Death Punch - Nemesis" << endl;
-	cout << "Linkin Park - Crawling" << endl;
-	cout << "Jim Croche - Time in a Bottle" << endl;
-	cout << "Taylor Swift - Bad Blood" << endl;
-	cout << "Taylor Swift - Shake It Off" << endl;
-	cout << "Casper Baby Pants - Butterfly Driving a Truck" << endl;
+	cout << "Five Finger Death Punch - House of the Rising Sun\n";
+	cout << "Five Finger Death Punch - Nemesis\n";
+	cout << "Linkin Park - Crawling\n";
+	cout << "Jim Croche - Time in a Bottle\n";
+	cout << "Taylor Swift - Bad Blood\n";
+	cout << "Taylor Swift - Shake It Off\n";
+	cout << "Casper Baby Pants - Butterfly Driving a Truck\n";
 
 
 	// Skips a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// Pauses the system and waits for user input
 	system("pause");
 
 	// Skips a line
-	cout << "" << endl;
+	cout << "\n";
 	
 	// For loop that prints 5 - 0
 	for (int i = 5; i > -1; --i)
@@ -43,65 +44,68 @@ int main()
 	}
 
 	// Skips a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// Pauses the system and waits for user input
 	system("pause");
 
 	// Skip a line
-	cout << "" << endl;
+	cout << "\n";
 
-	// Counting
-	cout << "0" << endl;
-	cout << "1" << endl;
-	cout << "2" << endl;
-	cout << "3" << endl;
-	cout << "4" << endl;
-	cout << "5" << endl;
-	cout << "4" << endl;
-	cout << "3" << endl;
-	cout << "2" << endl;
-	cout << "1" << endl;
-	cout << "0" << endl;
+	/* Counting */
+	// For loop ascends up to 5
+	for (int i = 0; i < 6; i++)
+	{
+		cout << i << endl;
+		// Checks to see if i is the same as 5
+		if (i == 5)
+		{
+			// if it is... this for loop begins to decend from 4 for the countdown
+			for (int j = 4; j > -1; j--)
+			{
+				cout << j << endl;
+			}
+		}
+	}	
 
 	// skips a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// Pauses the system and waits for user input
 	system("pause");
 
 	// Skips a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// SyntacticalErrors-A)
-	std::cout << "SyntacticalErrors-A)" << std::endl;
-	std::cout << "Howdy AIE" << std::endl;
-	std::cout << "It's a fine day today as any!" << std::endl;
-	std::cout << "I really wish I had some potatoes..." << std::endl;
+	cout << "SyntacticalErrors-A)\n";
+	cout << "Howdy AIE\n";
+	cout << "It's a fine day today as any!\n";
+	cout << "I really wish I had some potatoes...\n";
 
 	// Skip a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// Pauses the system and waits for user input
 	system("pause");
 
 	// Skip a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// SyntacticalErrors-B)
-	std::cout << "SyntacticalErrors-B)" << std::endl;
-	std::cout << "Four score and seven years ago" << std::endl;
-	std::cout << "our fathers brought forth on this continent," << std::endl;
-	std::cout << "a new nation," << std::endl;
-	std::cout << "conceived in Libery, and dedicated to the proposition" << std::endl;
-	std::cout << "that all men are created equal." << std::endl;
+	cout << "SyntacticalErrors-B)\n";
+	cout << "Four score and seven years ago\n";
+	cout << "our fathers brought forth on this continent,\n";
+	cout << "a new nation,\n";
+	cout << "conceived in Liberty, and dedicated to the proposition\n";
+	cout << "that all men are created equal.\n";
 
-	std::cout << "Now we are engaged in a great civil war," << std::endl;
-	std::cout << "testing whether that nation, or any nation" << std::endl;
-	std::cout << "so conceived and so dedicated, can long endure." << std::endl;
+	cout << "Now we are engaged in a great civil war,\n";
+	cout << "testing whether that nation, or any nation\n";
+	cout << "so conceived and so dedicated, can long endure.\n";
 
 	// Skip a line
-	cout << "" << endl;
+	cout << "\n";
 
 	// Pauses the system and waits for user input
 	system("pause");
