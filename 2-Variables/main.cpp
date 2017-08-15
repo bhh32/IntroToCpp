@@ -105,6 +105,22 @@ int main()
 	// Skip a line
 	std::cout << " " << std::endl;
 
+	// Get User Input
+	std::cout << "Enter A Height: ";
+	std::cin >> rectHeight;
+	std::cout << " " << std::endl;
+	std::cout << "Enter A Width: ";
+	std::cin >> rectWidth;
+
+	// Calculate the new area
+	rectArea = rectWidth * rectHeight;
+
+	// Print out the area of the users rectangle
+	std::cout << "Your Rectangle Area Is: " << rectArea << std::endl;
+
+	// Skip a line
+	std::cout << " " << std::endl;
+
 	/* Average of Five */
 	float a, b, c, d, e; // Modify these variables below.
 	float avg;           // Modify these variables below.
@@ -197,6 +213,8 @@ int main()
 
 	if (age > japanLifeExp)
 		std::cout << "You have gone over the life expectancy of Japan, which is: " << japanLifeExp << std::endl;
+	else if (age == japanLifeExp)
+		std::cout << "You are the same age as the life expectancy of Japan, which is: " << japanLifeExp << std::endl;
 	else
 	{
 		japanLifeExp -= age;
@@ -207,6 +225,8 @@ int main()
 
 	if (age > usLifeExp)
 		std::cout << "You have gone over the life expectancy of the U.S., which is: " << usLifeExp << std::endl;
+	else if (age == usLifeExp)
+		std::cout << "You are the same age as the U.S.'s life exectancy: " << usLifeExp << std::endl;
 	else
 	{
 		usLifeExp -= age;
@@ -217,6 +237,8 @@ int main()
 
 	if (age > sierraLeoneLifeExp)
 		std::cout << "You have gone over the life expectancy of Sierra Leone, which is " << sierraLeoneLifeExp << std::endl;
+	else if (age == sierraLeoneLifeExp)
+		std::cout << "You are the same age as the Sierra Leone Life expectancy: " << sierraLeoneLifeExp << std::endl;
 	else
 	{
 		sierraLeoneLifeExp -= age;
