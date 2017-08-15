@@ -131,18 +131,24 @@ int main()
 	int firstNum = 13;
 	int secondNum = 24;
 
-	// My Work
+	/* My Work */
+	// The variables initial values printed out to the console
+	std::cout << "Number Swap Initial Values" << std::endl;
 	std::cout << "firstNum is: " << firstNum << std::endl;
 	std::cout << "secondNum is: " << secondNum << std::endl;
 
 	//Skip a line
 	std::cout << " " << std::endl;
 
+	// Create a temp variable to hold the secondNum value
 	int temp = secondNum;
+	// Put the firstNum value into the secondNum variable
 	secondNum = firstNum;
+	// Put the temp variables value (secondNum's original value) into the firstNum variable
 	firstNum = temp;
 
-	// Given Print To Console Code
+	/* Given Print To Console Code */
+	// Print out the number swap program title and variables swapped values
 	std::cout << "Number Swap) " << std::endl;
 	std::cout << "firstNum is: " << firstNum << std::endl;
 	std::cout << "secondNum is: " << secondNum << std::endl;
@@ -191,7 +197,7 @@ int main()
 	else
 	{
 		usLifeExp -= age;
-		std::cout << "You are " << usLifeExp << " years from Japan's life expectancy of 79 years old!" << std::endl;
+		std::cout << "You are " << usLifeExp << " years from the U.S.'s life expectancy of 79 years old!" << std::endl;
 	}
 
 	int sierraLeoneLifeExp = 50;
@@ -208,6 +214,56 @@ int main()
 	std::cout << " " << std::endl;
 
 
+	/** Challenge **/
+
+	/* Conforming To Conventions - Lower Camel Case To Lower Snake Case */
+	// Lower Camel Case              ** Lower Snake Case
+	// int age;                         // int age;
+	// int bulletCount;                 // int bullet_count;
+	// float dogYears;                  // float dog_years;
+	// int qty;                         // int qty;
+	// float shieldValue;               // float shield_value;
+	// float redArmorRatio;             // float red_armor_ratio;
+	// int happiness;                   // int happiness;
+	// int gandhiAggression;            // int gandhi_aggression;
+
+
+	/* The Right Tool for the Job */
+	// int num;                // integer
+	// float num2;             // single precision floating point
+	// double num3;            // double precision floating point
+	// bool boolean;           // Boolean
+	// char character;         // Character
+	// void f(int);            // void type - Checks if void is true or false
+	// long double num4;       // Long Double more than double precision floating point
+	// unsigned int num5;      // Unsigned Integer
+	// signed int num6;        // Signed Integer
+	// short int num7;         // Short Integer
+	// long int num8;          // Long Integer
+	// long long int num9;     // Long Long Integer
+
+	/* Number Swap (Difficulty Up) */
+	
+	// My Work
+	// Print the initial values out to the console using the swapped numbers from the previous swap
+	std::cout << "Number Swap (Difficulty Up)" << std::endl;
+	std::cout << "firstNum: " << firstNum << std::endl;
+	std::cout << "secondNum: " << secondNum << std::endl;
+
+	// firstNum subtracts 11 to get 13 as the value, completing the first part of the "swap" of the values
+	firstNum -= 11;
+	// secondNum adds 11 to get 24 as the value, thus completing the "swapping" of the values
+	secondNum += 11;
+
+	// Skip a line
+	std::cout << " " << std::endl;
+
+	// Print the Swapped values out to the console
+	std::cout << "firstNum swapped value: " << firstNum << std::endl;
+	std::cout << "secondNum swapped value: " << secondNum << std::endl;
+
+	// Skip a line
+	std::cout << " " << std::endl;
 
 
 	/**
