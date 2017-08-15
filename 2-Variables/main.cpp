@@ -1,5 +1,9 @@
 #include <iostream>
 
+using std::cout;
+using std::cin;
+using std::endl;
+
 int main()
 {
 	/* Closed Assignment Problems */ 
@@ -11,7 +15,7 @@ int main()
 	numberA = 11;
 	numberA = 14;
 
-	std::cout << "A) " << numberA << std::endl;
+	cout << "A) " << numberA << endl;
 
 	/* Problem B (Guess Before Program Is Ran: 9) */
 	int numberB = 10;
@@ -20,7 +24,7 @@ int main()
 	int thing = 55;
 	thing = 22;
 
-	std::cout << "B) " << numberB << std::endl;
+	cout << "B) " << numberB << endl;
 
 	/* Problem C (Guess Before Program Is Ran: 21) */
 	int numberC = 3;
@@ -32,7 +36,7 @@ int main()
 
 	numberC = somethingC;
 
-	std::cout << "C) " << numberC << std::endl;
+	cout << "C) " << numberC << endl;
 
 	/* Problem D (Guess Before Program Is Ran: 3) */
 	int numberD = 1;
@@ -40,24 +44,24 @@ int main()
 
 	numberD = somethingD;
 
-	std::cout << "D) " << somethingD << std::endl;
+	cout << "D) " << somethingD << endl;
 
 	/* Problem E (Guess Before Program Is Ran: 6)*/
 	int x = 13;
 
 	x = x / 2;
 
-	std::cout << "E) " << x << std::endl;
+	cout << "E) " << x << endl;
 
 	/* Problem F (Guess Before Program Is Ran: 6.5) */
 	float y = 13;
 
 	y = y / 2;
 
-	std::cout << "F) " << y << std::endl;
+	cout << "F) " << y << endl;
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	cout << "\n";
 
 	/* Celsius to Fahrenheit */
 	float degCelsius = 78.0f;
@@ -67,25 +71,25 @@ int main()
 	degFahrenheight = (degCelsius * 1.8f) + 32.f;
 
 	// Given Print To Console Code
-	std::cout << "Celsius to Fahrenheit)" << std::endl;
-	std::cout << "Celsius: " << degCelsius << std::endl;
-	std::cout << "Fahrenheit: " << degFahrenheight << std::endl;
+	cout << "Celsius to Fahrenheit)" << endl;
+	cout << "Celsius: " << degCelsius << endl;
+	cout << "Fahrenheit: " << degFahrenheight << endl;
 
 	// Skip a Line
-	std::cout << " " << std::endl;
+	cout << "\n";
 
 	// Have the user enter a value for deg celsius to convert
-	std::cout << "Enter a value in deg celsius to convert to fahrenheit: ";
-	std::cin >> degCelsius;
+	cout << "Enter a value in deg celsius to convert to fahrenheit: ";
+	cin >> degCelsius;
 
 	// Convert to fahrenheight
 	degFahrenheight = (degCelsius * 1.8f) + 32.f;
 
 	// Print out the converstion
-	std::cout << "The temp converted is: " << degFahrenheight << std::endl;
+	cout << "The temp converted is: " << degFahrenheight << endl;
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	cout << "\n";
 
 	/* Area of a Rectangle */
 	float rectWidth = 0.0f;
@@ -98,28 +102,28 @@ int main()
 	rectArea = rectWidth * rectHeight;
 
 	// Given Print To Console Code
-	std::cout << "Area of a Rectangle)" << std::endl;
-	std::cout << "Height: " << rectHeight << " , Width: " << rectWidth << std::endl;
-	std::cout << "Area: " << rectArea << std::endl;
+	cout << "Area of a Rectangle)" << endl;
+	cout << "Height: " << rectHeight << " , Width: " << rectWidth << endl;
+	cout << "Area: " << rectArea << endl;
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	std::cout << "\n";
 
 	// Get User Input
-	std::cout << "Enter A Height: ";
-	std::cin >> rectHeight;
-	std::cout << " " << std::endl;
-	std::cout << "Enter A Width: ";
-	std::cin >> rectWidth;
+	cout << "Enter A Height: ";
+	cin >> rectHeight;
+	cout << "\n";
+	cout << "Enter A Width: ";
+	cin >> rectWidth;
 
 	// Calculate the new area
 	rectArea = rectWidth * rectHeight;
 
 	// Print out the area of the users rectangle
-	std::cout << "Your Rectangle Area Is: " << rectArea << std::endl;
+	cout << "Your Rectangle Area Is: " << rectArea << endl;
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	cout << " " << endl;
 
 	/* Average of Five */
 	float a, b, c, d, e; // Modify these variables below.
@@ -131,30 +135,32 @@ int main()
 	bool allNumsEntered = false;
 	do
 	{
-		std::cout << "Enter a decimal number higher than 0.0: ";
+		cout << "Enter a decimal number higher than 0.0: ";
 		if (a == 0.0f)
-			std::cin >> a;
+			cin >> a;
 		else if (b == 0.0f)
-			std::cin >> b;
+			cin >> b;
 		else if (c == 0.0f)
-			std::cin >> c;
+			cin >> c;
 		else if (d == 0.0f)
-			std::cin >> d;
+			cin >> d;
 		else if (e == 0.0f)
 		{
-			std::cin >> e;
+			cin >> e;
 			avg = (a + b + c + d + e) / 5.0f;
 			allNumsEntered = true;
 		}
+
 		// Skip a line
-		std::cout << " " << std::endl;
+		cout << "\n";
+
 	} while (!allNumsEntered);
 
 	// Print the average of the user's input numbers to the console
-	std::cout << "The average of the numbers you entered is: " << avg << std::endl;
+	cout << "The average of the numbers you entered is: " << avg << endl;
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	cout << "\n";
 
 	/* Number Swap */
 	int firstNum = 13;
@@ -162,12 +168,12 @@ int main()
 
 	/* My Work */
 	// The variables initial values printed out to the console
-	std::cout << "Number Swap Initial Values" << std::endl;
-	std::cout << "firstNum is: " << firstNum << std::endl;
-	std::cout << "secondNum is: " << secondNum << std::endl;
+	cout << "Number Swap Initial Values" << endl;
+	cout << "firstNum is: " << firstNum << endl;
+	cout << "secondNum is: " << secondNum << endl;
 
 	//Skip a line
-	std::cout << " " << std::endl;
+	std::cout << "\n";
 
 	// Create a temp variable to hold the secondNum value
 	int temp = secondNum;
@@ -178,12 +184,12 @@ int main()
 
 	/* Given Print To Console Code */
 	// Print out the number swap program title and variables swapped values
-	std::cout << "Number Swap) " << std::endl;
-	std::cout << "firstNum is: " << firstNum << std::endl;
-	std::cout << "secondNum is: " << secondNum << std::endl;
+	cout << "Number Swap)\n";
+	cout << "firstNum is: " << firstNum << endl;
+	cout << "secondNum is: " << secondNum << endl;
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	std::cout << "\n";
 
 	/* Fun Facts for Your Age */
 	int age = 0;
@@ -193,60 +199,60 @@ int main()
 	std::cin >> age;
 
 	// Tell the user how old they are
-	std::cout << "Howdy! You are " << age << " years old!" << std::endl;
+	cout << "Howdy! You are " << age << " years old!\n";
 
 	// Calculate The Months The User Has Been Alive Approx.
 	int months = age * 12;
-	std::cout << "You've been alive for at least " << months << " months!" << std::endl;
+	cout << "You've been alive for at least " << months << " months!\n";
 
 	// Calculate The Decades The User Has Been Alive
 	float decades = 0.0f;
 	decades = (float)age / 10.0f;
-	std::cout << "You have been alive for " << decades << " decades!" << std::endl;
+	cout << "You have been alive for " << decades << " decades!\n";
 
 	// Calculate The Scores The User Has Been Alive
 	float scores = 0.0f;
 	scores = (float)age / 20.0f;
-	std::cout << "You have been alive for " << scores << " scores! *A score is 20 years." << std::endl;
+	cout << "You have been alive for " << scores << " scores! *Note: A score is 20 years.\n";
 
 	int japanLifeExp = 84;
 
 	if (age > japanLifeExp)
-		std::cout << "You have gone over the life expectancy of Japan, which is: " << japanLifeExp << std::endl;
+		cout << "You have gone over the life expectancy of Japan, which is: " << japanLifeExp << endl;
 	else if (age == japanLifeExp)
-		std::cout << "You are the same age as the life expectancy of Japan, which is: " << japanLifeExp << std::endl;
+		cout << "You are the same age as the life expectancy of Japan, which is: " << japanLifeExp << endl;
 	else
 	{
 		japanLifeExp -= age;
-		std::cout << "You are " << japanLifeExp << " years from Japan's life expectancy of 84 years old!" << std::endl;
+		cout << "You are " << japanLifeExp << " years from Japan's life expectancy of 84 years old!\n";
 	}
 
 	int usLifeExp = 79;
 
 	if (age > usLifeExp)
-		std::cout << "You have gone over the life expectancy of the U.S., which is: " << usLifeExp << std::endl;
+		cout << "You have gone over the life expectancy of the U.S., which is: " << usLifeExp << endl;
 	else if (age == usLifeExp)
-		std::cout << "You are the same age as the U.S.'s life exectancy: " << usLifeExp << std::endl;
+		cout << "You are the same age as the U.S.'s life exectancy: " << usLifeExp << endl;
 	else
 	{
 		usLifeExp -= age;
-		std::cout << "You are " << usLifeExp << " years from the U.S.'s life expectancy of 79 years old!" << std::endl;
+		cout << "You are " << usLifeExp << " years from the U.S.'s life expectancy of 79 years old!\n";
 	}
 
 	int sierraLeoneLifeExp = 50;
 
 	if (age > sierraLeoneLifeExp)
-		std::cout << "You have gone over the life expectancy of Sierra Leone, which is " << sierraLeoneLifeExp << std::endl;
+		cout << "You have gone over the life expectancy of Sierra Leone, which is " << sierraLeoneLifeExp << endl;
 	else if (age == sierraLeoneLifeExp)
-		std::cout << "You are the same age as the Sierra Leone Life expectancy: " << sierraLeoneLifeExp << std::endl;
+		cout << "You are the same age as the Sierra Leone Life expectancy: " << sierraLeoneLifeExp << endl;
 	else
 	{
 		sierraLeoneLifeExp -= age;
-		std::cout << "You are " << sierraLeoneLifeExp << " years from Sierra Leone's life expectancy of 50 years old!" << std::endl;
+		cout << "You are " << sierraLeoneLifeExp << " years from Sierra Leone's life expectancy of 50 years old!\n";
 	}
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	std::cout << "\n";
 
 
 	/** Challenge **/
@@ -281,9 +287,9 @@ int main()
 	
 	// My Work
 	// Print the initial values out to the console using the swapped numbers from the previous swap
-	std::cout << "Number Swap (Difficulty Up)" << std::endl;
-	std::cout << "firstNum: " << firstNum << std::endl;
-	std::cout << "secondNum: " << secondNum << std::endl;
+	cout << "Number Swap (Difficulty Up)\n";
+	cout << "firstNum: " << firstNum << endl;
+	cout << "secondNum: " << secondNum << endl;
 
 	// firstNum subtracts 11 to get 13 as the value, completing the first part of the "swap" of the values
 	firstNum -= 11;
@@ -291,14 +297,14 @@ int main()
 	secondNum += 11;
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	cout << "\n";
 
 	// Print the Swapped values out to the console
-	std::cout << "firstNum swapped value: " << firstNum << std::endl;
-	std::cout << "secondNum swapped value: " << secondNum << std::endl;
+	cout << "firstNum swapped value: " << firstNum << endl;
+	cout << "secondNum swapped value: " << secondNum << endl;
 
 	// Skip a line
-	std::cout << " " << std::endl;
+	cout << "\n";
 
 
 	/**
