@@ -64,7 +64,7 @@ int main()
 	float degFahrenheight = 0.0f;
 
 	// My Work
-	degFahrenheight = (degCelsius * 1.8) + 32;
+	degFahrenheight = (degCelsius * 1.8f) + 32.f;
 
 	// Given Print To Console Code
 	std::cout << "Celsius to Fahrenheit)" << std::endl;
@@ -72,6 +72,19 @@ int main()
 	std::cout << "Fahrenheit: " << degFahrenheight << std::endl;
 
 	// Skip a Line
+	std::cout << " " << std::endl;
+
+	// Have the user enter a value for deg celsius to convert
+	std::cout << "Enter a value in deg celsius to convert to fahrenheit: ";
+	std::cin >> degCelsius;
+
+	// Convert to fahrenheight
+	degFahrenheight = (degCelsius * 1.8f) + 32.f;
+
+	// Print out the converstion
+	std::cout << "The temp converted is: " << degFahrenheight << std::endl;
+
+	// Skip a line
 	std::cout << " " << std::endl;
 
 	/* Area of a Rectangle */
