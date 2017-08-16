@@ -336,17 +336,13 @@ int Clamp(int x, int y, int z)
 float Distance(int xA, int yA, int xB, int yB)
 {
 	// Subtrace the x coordinates
-	float xPoints = xB - xA;
-	// Square the x coordinates
-	xPoints = Square(xPoints);
+	float xPoints = Square((xB - xA));
 
 	// Subtract the y coordinates
-	int yPoints = yB - yA;
-	// Square the y coordinates
-	yPoints = Square(yPoints);
+	float yPoints = Square((yB - yA));
 
 	// Calculates the square root (float function) of the sum of the previous calculations
-	float distance = sqrtf((float)xPoints + (float)yPoints);
+	float distance = sqrtf(xPoints + yPoints);
 
 	// Return distance
 	return distance;
@@ -682,7 +678,7 @@ char ToLower(char x)
 	return x;
 }
 
-// 5.) UNIT TESTING FRAMEWORK
+// 5.) UNIT TESTING FRAMEWORK **Notes: Still TODO
 void FunctionTesting()
 {
 	// TODO
