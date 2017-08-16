@@ -1,10 +1,12 @@
 #include <iostream>
+#include <ctime>
+#include <random>
 
 using std::cout;
 using std::cin;
 using std::endl;
 
-void Sum(int x, int y); // 1.) Declaring and Defining Functions
+int Sum(int x, int y); // 1.) Declaring and Defining Functions
 
 /** CLOSED ACTIVITIES **/
 
@@ -149,19 +151,62 @@ int main()
 
 	cout << "\n";
 
+	/* CHALLENGE ACTIVITIES */
+
+	// 1.) LINEAR INTERPOLATION
+	printf("%g\n", Lerp(2, 4, .5f));
+	printf("%g\n", Lerp(1, 100, .25f));
+	printf("%g\n", Lerp(1, 2, .04f));
+	
+	cout << "\n";
+
+	// 2.) CLAMP - PART TWO
+	cout << "Clamp - Part Two\n";
+	cout << Clamp2(12, 45, 78) << endl;
+	cout << Clamp2(23, 34, 30) << endl;
+	cout << Clamp2(1, 10, -12) << endl;
+
+	cout << "\n";
+
+	// 3.) HIGH AND LOW GAME
+	cout << "High and Low Game\n";
+	HighLowGame();
+
+	cout << "\n";
+
+	// 4.) TO UPPER OR TO LOWER
+	cout << "To Upper\n";
+	cout << ToUpper('q') << endl;
+	cout << ToUpper('r') << endl;
+	cout << ToUpper('a') << endl;
+	cout << ToUpper('!') << endl;
+
+	cout << "\n";
+	cout << "ToLower\n";
+	cout << ToLower('E') << endl;
+	cout << ToLower('X') << endl;
+	cout << ToLower('S') << endl;
+	cout << ToLower('#') << endl;
+
+	cout << "\n";
+
+	// 5.) UNIT TESTING FRAMEWORK
+
 	// Pauses the system and waits for user input
 	system("pause");
 
 	return 0;
 }
 
-void Sum(int x, int y) // 2.) Declaring and Defining Functions
+int Sum(int x, int y) // 2.) Declaring and Defining Functions
 {
 	// Adds the x and y parameters
 	int sum = x + y;
 
 	// Prints out the sum to the console
-	cout << "The sum of your numbers are: " << sum << endl;
+	//cout << "The sum of your numbers are: " << sum << endl;
+
+	return sum;
 }
 
 /** CLOSED ACTIVITIES **/
@@ -325,63 +370,316 @@ int ETA(int xA, int yA, int xB, int yB, int speed)
 // 1.) LINEAR INTERPOLATION
 float Lerp(int x, int y, float z)
 {
-	// TODO
-	/* Define a function that accepts three numbers, where the first two describe the beginning and end of a range respectively.
-	The third value is a normalized number that ranges between 0 to 1. The third number is used to pick a value within the range.
-    For example, if the numbers 2, 4, and 0.5 are provided, then the number 3 would be returned. You can think of 0.5 as being 
-    50% or halfway between 2 and 4. */
+	int lerpVal = 0;
+	// Adds the x and y values so the z variable can represent a percentage
+	int xAndYSum = Sum(x, y);
+
+	// Clamps z between 1 and 0
+	if (z < 0.0f)
+		z = 0.0f;
+	else if (z > 1.0f)
+		z = 1.0f;
+
+	// Calculates the percentage of the sum of x and y that z represents
+	float lerpValue = (float)xAndYSum * z;
+
+	// Checks to see if the value is greater than 1
+	if (lerpValue >= 1.0f)
+	{
+		// if it is get rid of the decimal values by casting to int
+		lerpVal = (int)lerpValue;
+		// ... then return the int by casting back to a float, the printf formatting will take care of the 0's after the decimal
+		return (float)lerpVal;
+	}
+	else
+		// if the value is less than one return the original float
+		return lerpValue;
 }
 
 // 2.) CLAMP - PART TWO
 int Clamp2(int x, int y, int z)
 {
-	// TODO
-	/* Did you reuse the min and max function when you implemented your clamp function? If you didn’t, try doing so now! 
-	Your clamp function should not include anything other than function calls and number literals. */
+	// Set the minimum value in the range
+	int min = Min(x, y);
+
+	// Set the maximum value in the range
+	int max = Max(x, y);
+
+	// Set z to the min range value if it's less than the min value
+	if (z < min)
+		z = min;
+	// Set z to the max range value if it's more than the max value
+	else if (z > max)
+		z = max;
+
+	// Always return z
+	return z;
 }
 
 // 3.) HIGH AND LOW GAME
 void HighLowGame()
 {
-	// TODO
-	/* Add functionality to your program that provides the user with three to five opportunities to guess a secret number. 
-	   The player guesses by providing a number which is said to be too high, too low, or on the mark with respect to the secret number.
+	// Seeding the rand() function to get a random number
+	srand(time(nullptr));
 
-       Remember to provide feedback to the player by printing a message for each guess.
+	// The intial random number for the player to guess (Between 1 - 50)
+	int randNum = rand() % 50 + 1;
+	// The player's guess
+	int userGuess = 0;
+	// The player's tries
+	int tries = 3;
+	// The player's answer if they want to play again.
+	char playAgain = 'n';
 
-       Use a random number generator such as rand() to generate a random number for your secret number. Remember to seed the random number 
-	   generator with srand() if that’s what you’ll be using. */
+	// Simple do, while loop used as a game loop. The loop is tested against how many tries the player has left as the exit condition.
+	do
+	{
+		// Prompt the player to guess a number between 1 and 50
+		cout << "Guess A Number Between 1 and 50: ";
+		// Take the player's guess
+		cin >> userGuess;
+
+		// Test the players guess
+		if (userGuess == randNum)
+		{
+			cout << "You guessed the number!\n";
+			// The player guessed the number so, we break out of the game loop
+			break;
+		}
+		else if (userGuess < randNum)
+		{
+			// Prompts the user that their guess was too low
+			cout << "Too Low!\n";
+			// Takes a try away
+			tries--;
+		}
+		else
+		{
+			// Prompts the user that their guess was too high
+			cout << "Too High!\n";
+			// Takes a try away
+			tries--;
+		}
+
+		// Checks to see if the user has any more guesses
+		if (tries <= 0)
+		{
+			// If there are no more guesses, prompts the user that they lost and asks if they want to play again
+			cout << "Sorry you lose!\n" << "The number was " << randNum << "\nDo you want to play again? (y or n): ";
+			// Takes the user's input
+			cin >> playAgain;
+
+			// Tests the user's input.
+			switch (playAgain)
+			{
+			// The player wants to play again.
+			case 'y':
+			case 'Y':
+				// Prompt to let the player know the game is restarting
+				cout << "Awesome! Here we go!\n";
+				// Gives a new random number
+				randNum = rand() % 50 + 1;
+				// Resets the tries
+				tries = 3;
+				break; // Breaks out of switch case statement NOT the game loop
+			// The player doesn't want to play again
+			case 'n':
+			case 'N':
+				// Prompt thanking the player for playing the game
+				cout << "Ok! Thanks for playing!\n";
+				break; // Breaks out of the switch case statement NOT the game loop
+			default:
+				// Prompts the player that they didn't make a valid choice, and the game will end. Thanks the player for playing.
+				cout << "You didn't make a valid choice, so I'll end the game. Thanks for playing!\n";
+				break; // Breaks out of the switch case statement NOT the game loop
+			}
+		}
+	} while (tries > 0); // The exit condition for the do, while game loop. Used do, while because I want the loop to execute at least once.
 }
 
 // 4.) TO UPPER OR TO LOWER
 char ToUpper(char x)
 {
-	// TODO
+	/* Switch case statement checks the user's input, replaces it with the capital version of the char, and returns it. 
+	   Any character that isn't a letter will just return that same character as the default case just breaks the switch 
+	   case statement. The variable x is always returned. */
+	switch (x)
+	{
+	case 'a':
+		x = 'A';
+		break;
+	case 'b':
+		x = 'B';
+		break;
+	case 'c':
+		x = 'C';
+		break;
+	case 'd':
+		x = 'D';
+		break;
+	case 'e':
+		x = 'E';
+		break;
+	case 'f':
+		x = 'F';
+		break;
+	case 'g':
+		x = 'G';
+		break;
+	case 'h':
+		x = 'H';
+		break;
+	case 'i':
+		x = 'I';
+		break;
+	case 'j':
+		x = 'J';
+		break;
+	case 'k':
+		x = 'K';
+		break;
+	case 'l':
+		x = 'L';
+		break;
+	case 'm':
+		x = 'M';
+		break;
+	case 'n':
+		x = 'N';
+		break;
+	case 'o':
+		x = 'O';
+		break;
+	case 'p':
+		x = 'P';
+		break;
+	case 'q':
+		x = 'Q';
+		break;
+	case 'r':
+		x = 'R';
+		break;
+	case 's':
+		x = 'S';
+		break;
+	case 't':
+		x = 'T';
+		break;
+	case 'u':
+		x = 'U';
+		break;
+	case 'v':
+		x = 'V';
+		break;
+	case 'w':
+		x = 'W';
+		break;
+	case 'x':
+		x = 'X';
+		break;
+	case 'y':
+		x = 'Y';
+		break;
+	case 'z':
+		x = 'Z';
+		break;
+	default:
+		break;
+	}
 
-	/* Programming libraries such as humanizer serve as tools to format text in a manner that conforms to the given conventions for a particular use-case. 
-	   For example, the US National Weather Service (NWS) broadcasts parts of their weather advisories in all uppercase letters.
-
-       ...SMALL CRAFT ADVISORY FOR WINDS IN EFFECT UNTIL 9 PM CDT THIS EVENING...
-       Example of a Weather Advisory from NOAA
-
-       Rather than manually process each line and capitalize it in a manner befitting for consumption by humans, you could put it through a program instead!
-
-       Research and apply concepts from the ASCII table to create functions that convert a single character value into its uppercase or lowercase equivalent. */
+	return x;
 }
 
 char ToLower(char x)
 {
-	// TODO
+	/* Switch case statement checks the user's input, replaces it with the lower case version of the char, and returns it.
+	Any character that isn't a letter will just return that same character as the default case just breaks the switch case 
+	statement. The variable x is always returned. */
+	switch (x)
+	{
+	case 'A':
+		x = 'a';
+		break;
+	case 'B':
+		x = 'b';
+		break;
+	case 'C':
+		x = 'C';
+		break;
+	case 'D':
+		x = 'd';
+		break;
+	case 'E':
+		x = 'e';
+		break;
+	case 'F':
+		x = 'f';
+		break;
+	case 'G':
+		x = 'g';
+		break;
+	case 'H':
+		x = 'h';
+		break;
+	case 'I':
+		x = 'i';
+		break;
+	case 'J':
+		x = 'j';
+		break;
+	case 'K':
+		x = 'k';
+		break;
+	case 'L':
+		x = 'l';
+		break;
+	case 'M':
+		x = 'm';
+		break;
+	case 'N':
+		x = 'n';
+		break;
+	case 'O':
+		x = 'o';
+		break;
+	case 'P':
+		x = 'p';
+		break;
+	case 'Q':
+		x = 'q';
+		break;
+	case 'R':
+		x = 'r';
+		break;
+	case 'S':
+		x = 's';
+		break;
+	case 'T':
+		x = 't';
+		break;
+	case 'U':
+		x = 'u';
+		break;
+	case 'V':
+		x = 'v';
+		break;
+	case 'W':
+		x = 'w';
+		break;
+	case 'X':
+		x = 'x';
+		break;
+	case 'Y':
+		x = 'y';
+		break;
+	case 'Z':
+		x = 'z';
+		break;
+	default:
+		break;
+	}
 
-	/* Programming libraries such as humanizer serve as tools to format text in a manner that conforms to the given conventions for a particular use-case.
-	For example, the US National Weather Service (NWS) broadcasts parts of their weather advisories in all uppercase letters.
-
-	...SMALL CRAFT ADVISORY FOR WINDS IN EFFECT UNTIL 9 PM CDT THIS EVENING...
-	Example of a Weather Advisory from NOAA
-
-	Rather than manually process each line and capitalize it in a manner befitting for consumption by humans, you could put it through a program instead!
-
-	Research and apply concepts from the ASCII table to create functions that convert a single character value into its uppercase or lowercase equivalent. */
+	return x;
 }
 
 // 5.) UNIT TESTING FRAMEWORK
