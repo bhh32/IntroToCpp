@@ -4,9 +4,9 @@
 using std::cout;
 using std::cin;
 
-void StudentInformation(int id, int courseNum, int lastExamScore)
+void StudentInformation(students kids)
 {
-	cout << "Student ID: " << id << " Enrolled Course: " << courseNum << " Last Exam Score: " << lastExamScore << "\n";
+	cout << "Student ID: " << kids.studentID << " Enrolled Course: " << kids.courseNumber << " Last Exam Score: " << kids.lastExamScore << "\n";
 }
 
 float StudentAverageScore(students section[], int size)
@@ -21,7 +21,7 @@ float StudentAverageScore(students section[], int size)
 	return  total / size;
 }
 
-float StudentMedianScore(students section[], int size)
+int StudentMedianScore(students section[], int size)
 {
 	while (true)
 	{
@@ -49,10 +49,10 @@ float StudentMedianScore(students section[], int size)
 	if (size % 2 == 0)
 	{
 		int midIdx = size / 2;
-		float lhs = section[midIdx - 1].lastExamScore;
-		float rhs = section[midIdx].lastExamScore;
+		int lhs = section[midIdx - 1].lastExamScore;
+		int rhs = section[midIdx].lastExamScore;
 
-		return (lhs + rhs) / 2.0f;
+		return (lhs + rhs) / 2;
 	}
 	else
 	{
@@ -60,13 +60,12 @@ float StudentMedianScore(students section[], int size)
 	}
 }
 
-void TotalNumberStusInCourse(int courseNum)
+void TotalNumberStusInCourse(students section[], int courseNum)
 {
-	int stuCourseNums[]{ 1, 2, 2, 1, 2, 2 };
 	int courseCount = 0;
 	for (int i = 0; i < 6; i++)
 	{
-		if (stuCourseNums[i] == courseNum)
+		if (section[i].courseNumber == courseNum)
 		{
 			courseCount++;
 		}

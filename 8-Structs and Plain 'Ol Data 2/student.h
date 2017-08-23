@@ -13,9 +13,9 @@ struct students
 };
 
 // Functions
-void StudentInformation(int id, int courseNum, int lastExamScore);
+void StudentInformation(students kids);
 float StudentAverageScore(students section[], int size);
-float StudentMedianScore(students section[], int size);
-void TotalNumberStusInCourse(int courseNum);
+int StudentMedianScore(students section[], int size);
+void TotalNumberStusInCourse(students section[], int courseNum);
 
 #endif STUDENT_H
