@@ -68,22 +68,8 @@ void GameLoop::Battle(Entities &player, Entities &enemy)
 			Heal(player);
 		}
 		else
-			cout << "You didn't make a correct choice!\n Try Again: \n";
-
-		if (player.hitPoints != 0 || enemy.hitPoints != 0)
 		{
-			while (player.hitPoints != 0 || enemy.hitPoints != 0)
-			{
-				Attack(enemy, player);
-				cout << "Make another choice: ";
-				cin >> player.actionChoice;
-				Attack(player, enemy);
-			}
-			battleOver = !battleOver;
+			cout << "You didn't make a correct choice!\n Try Again: \n";
 		}
-		else if (player.hitPoints == 0)
-			PlayerDeath();
-		else
-			EnemyDeath(player, enemy);
 	}
 }

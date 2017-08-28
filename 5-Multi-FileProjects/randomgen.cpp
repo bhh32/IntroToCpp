@@ -13,10 +13,12 @@ int RandomGenerator::Rng()
 	return randNum;
 }
 
-//int RandomGenerator::RngRange(int x, int y)
-//{
-//	rand() % x + (x - y);
-//}
+int RandomGenerator::RngRange(int x, int y)
+{
+	int rando = rand() % x + (x - y);
+
+	return rando;
+}
 
 bool RandomGenerator::Rngb()
 {

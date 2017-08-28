@@ -15,6 +15,7 @@ struct Entities
 	char continueOrImprove;
 	bool finishedSkillUpgrade;
 	int actionChoice;
+	char iD;
 };
 
 void Attack(Entities &enemy, Entities &self);

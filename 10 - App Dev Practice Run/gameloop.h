@@ -8,6 +8,7 @@ public:
 	// variables
 	bool gameIsOver = false;
 	bool battleOver = false;
+	bool actionOver = false;
 
 	// functions
 	void MainGameLoop();

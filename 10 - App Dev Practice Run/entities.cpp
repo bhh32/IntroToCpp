@@ -1,13 +1,16 @@
 #include "entities.h"
 #include "gameloop.h"
 #include <iostream>
+#include <string>
 
 void Attack(Entities &enemy, Entities &self)
 {
-	self.hitPoints -= enemy.attackPoints;
+	if (self.hitPoints <= 0)
+	{
+		self.hitPoints -= enemy.attackPoints;
 
-	std::cout << "Hit!\n";
-
+		std::cout << "Hit, " << self.iD;
+	}
 }
 
 int Defend(Entities &enemy, Entities &self)
