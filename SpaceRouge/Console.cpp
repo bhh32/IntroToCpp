@@ -10,7 +10,7 @@ void Console::CreateConsole()
 	outHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	inHandle = GetStdHandle(STD_INPUT_HANDLE);
 	cursorInfo = {1, TRUE};
-	screenSize = { 100, 50 };
+	screenSize = { 50, 100 };
 	
 	SetStdHandle(STD_OUTPUT_HANDLE, outHandle);
 	SetStdHandle(STD_INPUT_HANDLE, inHandle);

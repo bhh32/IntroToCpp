@@ -25,10 +25,19 @@ void MainGameLoop::MainMenu(Console handle)
 
 void MainGameLoop::PlayGame()
 {
-	while (true)
-	{
+	system("cls");
+	SetPlayerInitialPosition();
+	system("pause");
 
-	}
+	/*while (true)
+	{
+		system("cls");
+
+		if (GetAsyncKeyState(VK_RIGHT) != 0)
+		{
+
+		}
+	}*/
 }
 
 

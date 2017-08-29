@@ -23,6 +23,9 @@ public:
 
 	// The main game loop destructor; unloads the game from memory before program completion.
 	~MainGameLoop();
+
+private:
+	int gameSpeed = 400;
 };
 
 #endif GAMELOOP_H

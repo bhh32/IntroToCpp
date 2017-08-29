@@ -2,10 +2,13 @@
 #include "MainMenu.h"
 #include "GameLoop.h"
 #include "Console.h"
+#include "GameLoop.h"
 
 void MainMenu::Menus(Console console)
 {
 	MainMenu mainMenu;
+	MainGameLoop gameLoop;
+
 	std::cout << "Do you want to Play, go to the Credits, or Quit the game?\n {p} - Play\n {c} - Credits\n {q} - Quit ";
 	std::cin >> mainMenu.playOrCredits;
 
@@ -13,8 +16,8 @@ void MainMenu::Menus(Console console)
 	{
 		if (mainMenu.playOrCredits == 'P' || mainMenu.playOrCredits == 'p')
 		{
-			MainGameLoop();
-			Menus(console);
+			
+			gameLoop.PlayGame();
 		}
 		else if (mainMenu.playOrCredits == 'C' || mainMenu.playOrCredits == 'c')
 		{

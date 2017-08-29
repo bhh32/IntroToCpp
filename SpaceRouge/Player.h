@@ -2,28 +2,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-class Player
+struct Player
 {
-public:
-	// Variables
-
-
-	// Functions
-	
-
-protected:
-	// Variables
-
-
-	// Functions
-
-
-private:
-	// Variables
-
-
-	// Functions
-
-
+	char pos[50][100];
+	int lives;
 };
+
+void SetPlayerInitialPosition();
+
 #endif PLAYER_H
