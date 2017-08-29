@@ -18,7 +18,7 @@ void WhiteSpace();
 void PigLatin();
 
 /** Open Activities **/
-void PalindromeTest();
+bool PalindromeTest(char string[]);
 
 int main()
 {
@@ -65,9 +65,13 @@ int main()
 
 	//WhiteSpace();
 
-	//PalindromeTest();
+	char buffer3[80];
+	std::cout << "Enter a palindrone: ";
+	std::cin.getline(buffer3, 80);
 
-	PigLatin();
+	std::cout << "The result is " << (buffer3) << "\n";
+
+	//PigLatin();
 
 	system("pause");
 }
@@ -154,37 +158,57 @@ void WhiteSpace()
 }
 
 /** Open Activities **/
-void PalindromeTest()
+bool isAlpha(char query) // Precondition string for Palindrone
 {
-	char userInput[80];
-	char testing[80] = { 0 };
-	char goodArray[80] = { 0 };
+	return query >= 'A' && query <= 'Z'||
+	query >= 'a' && query <= 'z';
+}
 
-	std::cout << "Enter a word to test if it's a Palindrome: ";
-	std::cin.getline(userInput, 80);
-
-	strcpy_s(testing, 80, userInput);
-
-	for (int i = strlen(userInput) - 1; i > -1; i--)
+char toLower(char query) // Precondition string for Palindrone
+{
+	if (query >= 'A' && query <= 'Z')
 	{
-		goodArray[i] = userInput[i];
+		query += 32;
 	}
 
-	for (int i = 0; i < strlen(userInput); i++)
+	return query;
+}
+
+// If no alpha-characters are in the string, will return false.
+bool PalindromeTest(char string[])
+{
+	// Starting from left and right-hand sides of the string
+	int i = 0;
+	int j = strlen(string) - 1;
+
+	// Special case if the string has no characters
+	bool hasChar = false;
+
+	// Checks for characters
+	do
 	{
-		userInput[i] = tolower(userInput[i]);
-		goodArray[i] = tolower(goodArray[i]);
+		// Find the first valid indices from left and right
+		while (!isAlpha(string[i]) || i < strlen(string)) i++;
+		while (!isAlpha(string[j]) || string[j] != 0) j--;
 
-		if (userInput[i] == goodArray[i])
-			testing[i] = userInput[i];
-	}
+		// If my search for characters has left me out of range
+		if (i >= strlen(string) || j < 0)
+			return hasChar; // I'm either a palindrone or have no chars
 
-	int check = strcmp(userInput, testing);
+		// Compare lower case only
+		if (toLower(string[i]) != toLower(string[j]))
+			return false;
 
-	if (check == 0)
-		std::cout << "Your word is a palindrome!\n";
-	else
-		std::cout << "Your word isn't a palindrome!\n";
+		// Move to the next index
+		i++;
+		j--;
+
+		// If this is reached the string has characters
+		hasChar = true;
+	} while (j >= 0);
+
+	// Returns it's a palindrone
+	return true;
 }
 
 void PigLatin()

@@ -3,34 +3,73 @@
 #include "GameLoop.h"
 #include "Console.h"
 #include "GameLoop.h"
+#include "CreateMap.h"
+#include "Player.h"
 
+// Goes to the main menu
 void MainMenu::Menus(Console console)
 {
-	MainMenu mainMenu;
+	// Create a gameloop object
 	MainGameLoop gameLoop;
 
-	std::cout << "Do you want to Play, go to the Credits, or Quit the game?\n {p} - Play\n {c} - Credits\n {q} - Quit ";
-	std::cin >> mainMenu.playOrCredits;
+	// Intialize the menuCheck bool
+	menuCheck = false;
 
-	while (true)
+	// Create a position COORD, and set the cursor to that position
+	COORD pos = { 15, 10 };
+	SetConsoleCursorPosition(console.outHandle, pos);
+
+	// Print in current console cursor position
+	std::cout << "Do you want to Play, go to the Credits, or Quit the game?\n {p} - Play\n {c} - Credits\n {q} - Quit ";
+	// Take in the user's input
+	std::cin >> playOrCredits;
+
+	// while the menuCheck is false check to see what the player wants to do.
+	while (!menuCheck)
 	{
-		if (mainMenu.playOrCredits == 'P' || mainMenu.playOrCredits == 'p')
+		// checks to see if the player wants to play the game
+		if (playOrCredits == 'P' || playOrCredits == 'p')
 		{
-			
-			gameLoop.PlayGame();
+			menuCheck = !menuCheck;
+			PlayGame();
 		}
-		else if (mainMenu.playOrCredits == 'C' || mainMenu.playOrCredits == 'c')
+		// checks to see if the player wants to see the credits
+		else if (playOrCredits == 'C' || playOrCredits == 'c')
 		{
-			mainMenu.GoToCredits(console);
+			GoToCredits(console);
 			std::cout << "\n";
 		}
-		else if (mainMenu.playOrCredits == 'Q' || mainMenu.playOrCredits == 'q')
+		// checks to see if the player wants to quit the game
+		else if (playOrCredits == 'Q' || playOrCredits == 'q')
 			break;
+		// have the user put something valid into the input
 		else
 			std::cout << "You didn't choose an applicable choice.\n Try Again!";
 	}
 }
 
+void MainMenu::PlayGame()
+{
+
+	system("cls");
+	Map map;
+	SetPlayerInitialPosition();
+	map.DrawMap();
+	
+	system("pause");
+
+	/*while (true)
+	{
+	system("cls");
+
+	if (GetAsyncKeyState(VK_RIGHT) != 0)
+	{
+
+	}
+	}*/
+}
+
+// Goes to the credits screen
 void MainMenu::GoToCredits(Console handle)
 {
 	system("cls");
@@ -52,6 +91,8 @@ void MainMenu::GoToCredits(Console handle)
 	std::cout << "Programming And Idea: Bryan Hyland\n";
 
 	std::cout << "\n";
+
+	// Runs until the user inputs an option
 	while (!creditCheck)
 	{
 		centerPos = { 14, 28 };

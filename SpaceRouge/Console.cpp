@@ -5,19 +5,18 @@
 // Cpp Header File
 #include "Console.h"
 
-void Console::CreateConsole()
+void CreateConsole(HANDLE &outHandle, HANDLE &inHandle, CONSOLE_CURSOR_INFO &cursorInfo, COORD &screenSize, char title[])
 {
-	outHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	inHandle = GetStdHandle(STD_INPUT_HANDLE);
-	cursorInfo = {1, TRUE};
-	screenSize = { 50, 100 };
-	
+	// Set the output and input handles
 	SetStdHandle(STD_OUTPUT_HANDLE, outHandle);
 	SetStdHandle(STD_INPUT_HANDLE, inHandle);
 
+	// Set the console screen buffer size
 	SetConsoleScreenBufferSize(outHandle, screenSize);
 
-	SetConsoleTitle("Bryan - Space Rouge");
+	// Set the console title
+	SetConsoleTitle(title);
 
+	// Set the information for the console cursor
 	SetConsoleCursorInfo(outHandle, &cursorInfo);	
 }

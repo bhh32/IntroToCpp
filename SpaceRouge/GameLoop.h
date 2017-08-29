@@ -12,20 +12,14 @@
 class MainGameLoop
 {
 public:
+	int gameSpeed = 400;
+	bool consoleCreated = false;
+
 	// The main game loop; used to run the game to completion.
-	MainGameLoop();
-
-	// Go To Main Menu
-	void MainMenu(Console handle);
-
-	// Play The Game
-	void PlayGame();
-
-	// The main game loop destructor; unloads the game from memory before program completion.
-	~MainGameLoop();
+	void GameLoop();
 
 private:
-	int gameSpeed = 400;
+	
 };
 
 #endif GAMELOOP_H

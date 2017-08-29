@@ -5,5 +5,6 @@
 
 int main(void)
 {
-	MainGameLoop();
+	MainGameLoop gameLoop;
+	gameLoop.GameLoop();
 }

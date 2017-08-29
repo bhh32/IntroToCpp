@@ -11,10 +11,10 @@ public:
 	HANDLE inHandle;
 	CONSOLE_CURSOR_INFO cursorInfo;
 	COORD screenSize;
-
-	// functions
-	void CreateConsole();
-
+	char title[80];
 };
+
+// functions
+void CreateConsole(HANDLE &outHandle, HANDLE &inHandle, CONSOLE_CURSOR_INFO &cursorInfo, COORD &screenSize, char title[]);
 
 #endif CONSOLE_H

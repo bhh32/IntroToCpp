@@ -5,46 +5,24 @@
 #include "Player.h"
 
 
-// The main game loop; used to run the game to completion.
-MainGameLoop::MainGameLoop()
+// The main game loop; calls the menu system, which leads to the PlayGame function
+void MainGameLoop::GameLoop()
 {
-	// Create The Console Window
-	Console console;
-	console.CreateConsole();
-	MainMenu(console);
-
-	system("pause");
-}
-
-void MainGameLoop::MainMenu(Console handle)
-{
-	COORD pos = { 15, 10 };
-	SetConsoleCursorPosition(handle.outHandle, pos);
-	MainMenu::Menus(handle);
-}
-
-void MainGameLoop::PlayGame()
-{
-	system("cls");
-	SetPlayerInitialPosition();
-	system("pause");
-
-	/*while (true)
+	// Initialize the console parameters
+	Console console =
 	{
-		system("cls");
+		GetStdHandle(STD_OUTPUT_HANDLE), GetStdHandle(STD_INPUT_HANDLE),
+		{ 1, TRUE },{ 50, 100 }, "Bryan - Space Rouge"
+	};
+		// Create the console with parameters above
+		CreateConsole(console.outHandle, console.inHandle, console.cursorInfo, console.screenSize, console.title);
+		
+		// Set consoleCreated to true
+		consoleCreated = !consoleCreated;
 
-		if (GetAsyncKeyState(VK_RIGHT) != 0)
-		{
-
-		}
-	}*/
-}
-
-
-// The main game loop destructor; unloads the game from memory before program completion.
-MainGameLoop::~MainGameLoop()
-{
-	std::cout << "The Game Is Over!\n";
+		// Open the main menu
+		MainMenu menus;
+		menus.Menus(console);
 
 	system("pause");
 }
