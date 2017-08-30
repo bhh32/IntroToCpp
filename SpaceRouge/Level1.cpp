@@ -1,12 +1,12 @@
-#include "CreateMap.h"
+#include "Level1.h"
+#include <Windows.h>
 #include <iostream>
 
-void Map::DrawMap()
+void Map::DrawMap(int mapX, int mapY, int playerX, bool shot, int shotx, int shoty)
 {
-	mapY = 100; // Rows
-	mapX = 80; // Columns
-
 	mapArray[mapY][mapX];
+	int shotY = mapY-2;
+	int shotX = playerX;
 
 	// Make the Right wall
 	for (int i = 0; i < mapY; i++)
@@ -41,15 +41,33 @@ void Map::DrawMap()
 		mapArray[mapY - 1][i] = '*';
 	}
 
+	// Insert The Player 'Ship'
+	mapArray[mapY - 3][playerX] = '^';
+
+	if (shot)
+	{
+		mapArray[shoty][shotx] = '|';
+		shot = false;
+	}
+
+	//mapArray[shotY][shotX] = '|';
+
+	// Print out the game board array, including player and enemies
 	for (int i = 0; i < mapY; i++)
 	{
+		/*if (shotY > 0)
+		{
+			mapArray[shotY][shotX] = '|';
+			shotY--;
+		}*/
 		for (int j = 0; j < mapX; j++)
 		{
 			std::cout << mapArray[i][j];
 		}
+
+		//Windows.h
+		//"put character"
+
 		std::cout << "\n";
 	}
-	
-
-	system("pause");
 }

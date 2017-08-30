@@ -3,7 +3,7 @@
 #include "GameLoop.h"
 #include "Console.h"
 #include "GameLoop.h"
-#include "CreateMap.h"
+#include "Level1.h"
 #include "Player.h"
 
 // Goes to the main menu
@@ -50,23 +50,58 @@ void MainMenu::Menus(Console console)
 
 void MainMenu::PlayGame()
 {
-
 	system("cls");
+	Console console =
+	{
+		GetStdHandle(STD_OUTPUT_HANDLE), GetStdHandle(STD_INPUT_HANDLE),
+		{ 1, TRUE },{ 250, 300 }, "Bryan - Space Rouge"
+	};
+
 	Map map;
-	SetPlayerInitialPosition();
-	map.DrawMap();
-	
-	system("pause");
+	int mapX = 70;
+	int mapY = 80;
+	int playerX = mapX / 2;
+	int shotX = playerX;
+	int shotY = 100;
+	bool hasShot = false;
 
-	/*while (true)
+	while (true)
 	{
-	system("cls");
+		system("cls");		
 
-	if (GetAsyncKeyState(VK_RIGHT) != 0)
-	{
+		map.DrawMap(mapX, mapY, playerX, hasShot, shotX, shotY);
 
+		// Move the player right
+		if (GetAsyncKeyState(VK_RIGHT) != 0)
+		{
+			if (playerX != mapX - 2)
+				playerX++;
+		}
+		// Move the player left
+		else if (GetAsyncKeyState(VK_LEFT) != 0)
+		{
+			if (playerX != 1)
+				playerX--;
+		}
+		// Shoot
+		else if (GetAsyncKeyState(VK_UP) != 0)
+		{
+			hasShot = true;
+			shotY = 96;
+			shotX = playerX;
+		}
+		// Quit
+		else if (GetAsyncKeyState(VK_ESCAPE) != 0)
+		{
+			system("cls");
+			Menus(console);
+			break;
+		}
+		if (shotY > 4)
+			shotY--;
+		else hasShot = false;
+		
 	}
-	}*/
 }
 
 // Goes to the credits screen

@@ -4,10 +4,14 @@
 
 struct Player
 {
-	char pos[50][100];
+	int playerX;
+	int playerY;
 	int lives;
+	bool isPowerUp;
+
+	void SetPlayerStats();
 };
 
-void SetPlayerInitialPosition();
+
 
 #endif PLAYER_H
