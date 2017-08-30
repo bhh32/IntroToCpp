@@ -5,6 +5,7 @@
 #include "GameLoop.h"
 #include "Level1.h"
 #include "Player.h"
+#include "Bullet.h"
 
 // Goes to the main menu
 void MainMenu::Menus(Console console)
@@ -50,57 +51,52 @@ void MainMenu::Menus(Console console)
 
 void MainMenu::PlayGame()
 {
-	system("cls");
+	
 	Console console =
 	{
 		GetStdHandle(STD_OUTPUT_HANDLE), GetStdHandle(STD_INPUT_HANDLE),
 		{ 1, TRUE },{ 250, 300 }, "Bryan - Space Rouge"
 	};
 
+	
+
+	console.Clear(BLACK);
+
 	Map map;
-	int mapX = 70;
-	int mapY = 80;
+	int mapX = 40;
+	int mapY = 45;
+	
 	int playerX = mapX / 2;
 	int shotX = playerX;
 	int shotY = 100;
-	bool hasShot = false;
+
+	Player player =
+	{
+		playerX, 3, false, false
+	};
 
 	while (true)
-	{
-		system("cls");		
+	{		
 
-		map.DrawMap(mapX, mapY, playerX, hasShot, shotX, shotY);
+		map.DrawMap(mapX, mapY, playerX, player.hasShot, shotX, shotY);
 
-		// Move the player right
 		if (GetAsyncKeyState(VK_RIGHT) != 0)
-		{
-			if (playerX != mapX - 2)
-				playerX++;
-		}
-		// Move the player left
+			PlayerMoveRight(playerX, mapX);
 		else if (GetAsyncKeyState(VK_LEFT) != 0)
-		{
-			if (playerX != 1)
-				playerX--;
-		}
-		// Shoot
+			PlayerMoveLeft(playerX, mapX);
 		else if (GetAsyncKeyState(VK_UP) != 0)
-		{
-			hasShot = true;
-			shotY = 96;
-			shotX = playerX;
-		}
+			PlayerShoot(playerX, mapY, player.hasShot, shotY, shotX);
+
 		// Quit
 		else if (GetAsyncKeyState(VK_ESCAPE) != 0)
 		{
-			system("cls");
+			console.Clear(BLACK);
 			Menus(console);
 			break;
-		}
-		if (shotY > 4)
-			shotY--;
-		else hasShot = false;
+		}		
 		
+		BulletUpdate(player.hasShot, shotY);
+		console.Clear(BLACK);
 	}
 }
 

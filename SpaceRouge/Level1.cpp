@@ -5,7 +5,7 @@
 void Map::DrawMap(int mapX, int mapY, int playerX, bool shot, int shotx, int shoty)
 {
 	mapArray[mapY][mapX];
-	int shotY = mapY-2;
+	int shotY = mapY - 2;
 	int shotX = playerX;
 
 	// Make the Right wall
@@ -50,24 +50,23 @@ void Map::DrawMap(int mapX, int mapY, int playerX, bool shot, int shotx, int sho
 		shot = false;
 	}
 
-	//mapArray[shotY][shotX] = '|';
-
 	// Print out the game board array, including player and enemies
 	for (int i = 0; i < mapY; i++)
 	{
-		/*if (shotY > 0)
-		{
-			mapArray[shotY][shotX] = '|';
-			shotY--;
-		}*/
 		for (int j = 0; j < mapX; j++)
 		{
 			std::cout << mapArray[i][j];
 		}
-
-		//Windows.h
-		//"put character"
-
 		std::cout << "\n";
+	}
+}
+
+
+void StrToCHI(char string[], size_t bSize, CHAR_INFO outInfo[])
+{
+	for (int i = 0; i < strlen(string) + 1 && i < bSize; ++i)
+	{
+		outInfo[i].Char.AsciiChar = string[i];
+		outInfo[i].Attributes = 0;
 	}
 }

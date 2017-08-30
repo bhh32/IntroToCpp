@@ -5,13 +5,15 @@
 struct Player
 {
 	int playerX;
-	int playerY;
 	int lives;
 	bool isPowerUp;
 
-	void SetPlayerStats();
+	bool hasShot;
+	
 };
 
-
+void PlayerMoveRight(int &playerX, int &mapX);
+void PlayerMoveLeft(int &playerX, int &mapX);
+void PlayerShoot(int &playerX, int &mapY,bool &hasShot, int &shotY, int &shotX);
 
 #endif PLAYER_H

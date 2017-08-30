@@ -17,7 +17,7 @@ void MainGameLoop::GameLoop()
 	};
 
 	// Create the console with parameters above
-	CreateConsole(console.outHandle, console.inHandle, console.cursorInfo, console.screenSize, console.title);
+	console.CreateConsole(console.outHandle, console.inHandle, console.cursorInfo, console.screenSize, console.title);
 	
 	// Set consoleCreated to true
 	consoleCreated = !consoleCreated;

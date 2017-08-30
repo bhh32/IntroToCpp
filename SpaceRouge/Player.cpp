@@ -1,10 +1,23 @@
 #include "Player.h"
 #include <iostream>
+#include <Windows.h>
 
-void Player::SetPlayerStats()
+
+void PlayerMoveRight(int &playerX, int &mapX)
 {
-	lives = 3;
-	isPowerUp = false;
-	playerX = 70 / 2;
-	playerY = 80 - 3;
+	if (playerX != mapX - 2)
+		playerX++;
+}
+
+void PlayerMoveLeft(int &playerX, int &mapX)
+{
+	if (playerX != 1)
+		playerX--;
+}
+
+void PlayerShoot(int &playerX, int &mapY, bool &hasShot, int &shotY, int &shotX)
+{
+	hasShot = true;
+	shotY = mapY - 4;
+	shotX = playerX;		
 }
