@@ -12,7 +12,7 @@
 class MainMenu
 {
 public:
-	void Menus(Console handle);
+	void Menus();
 	bool menuCheck;
 
 protected:
@@ -31,7 +31,7 @@ private:
 	void PlayGame();
 
 	// Go To The Credits Screen
-	void GoToCredits(Console handle);
+	void GoToCredits();
 	
 	
 };

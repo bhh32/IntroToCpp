@@ -8,21 +8,24 @@
 // The main game loop; calls the menu system, which leads to the PlayGame function
 void MainGameLoop::GameLoop()
 {
-	
+	// Intialize the console
+	ConsoleInit();
+
+
 	// Initialize the console parameters
-	Console console =
+	/*Console console =
 	{
 		GetStdHandle(STD_OUTPUT_HANDLE), GetStdHandle(STD_INPUT_HANDLE),
 		{ 1, TRUE },{ 250, 300 }, "Bryan - Space Rouge"
 	};
-
+*/
 	// Create the console with parameters above
-	console.CreateConsole(console.outHandle, console.inHandle, console.cursorInfo, console.screenSize, console.title);
+	/*console.CreateConsole(console.outHandle, console.inHandle, console.cursorInfo, console.screenSize, console.title);*/
 	
 	// Set consoleCreated to true
-	consoleCreated = !consoleCreated;
+	/*consoleCreated = !consoleCreated;*/
 
 	// Open the main menu
 	MainMenu menus;
-	menus.Menus(console);
+	menus.Menus();
 }
