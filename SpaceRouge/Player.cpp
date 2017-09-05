@@ -1,47 +1,46 @@
-#include "Player.h"
-#include "Console.h"
-#include <iostream>
 #include <Windows.h>
+#include "Screen.h"
+#include "Player.h"
+#include "Bullet.h"
 
-
-//void PlayerMoveRight(int &playerX, int &mapX)
-//{
-//	if (playerX != mapX - 2)
-//		playerX++;
-//}
-//
-//void PlayerMoveLeft(int &playerX, int &mapX)
-//{
-//	if (playerX != 1)
-//		playerX--;
-//}
-//
-//void PlayerShoot(int &playerX, int &mapY, bool &hasShot, int &shotY, int &shotX)
-//{
-//	hasShot = true;
-//	shotY = mapY - 4;
-//	shotX = playerX;		
-//}
-
-
-
-void Draw(Player p)
+void DrawPlayer(Player player)
 {
-	int trail = p.trail;
-	SetString(p.x + 2, p.y - 2, "^", BLACK, WHITE);
-	SetString(p.x + 2, p.y - 1, "|", BLACK, WHITE);
-	SetString(p.x, p.y,        "/|\\", BLACK, WHITE);
+	int trail = player.trail;
+	SetString(player.x + 2, player.y - 2, "u", WHITE, BLACK);
+	SetString(player.x + 2, player.y - 1, "|", WHITE, BLACK);
+	SetString(player.x, player.y, "|-|-|", WHITE, BLACK);
 
-	if (p.thrusting)
-		SetString(p.x + 2, p.y + 1, trail % 2 ? "M" : "S", BLACK, WHITE);
+	if (player.thrusting)
+		SetString(player.x + 2, player.y + 1, trail % 2 ? "^" : "s", WHITE, BLACK);
 }
 
-void Update(Player &p, float dt)
+void UpdatePlayer(Player &player, float deltaTime)
 {
-	p.thrusting = GetAsyncKeyState(VK_UP);
-	p.trail += dt * 10;
-	p.x += (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState('D')) * dt * p.speedX;
-	p.x -= (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState('A')) * dt * p.speedX;
-	p.y += (GetAsyncKeyState(VK_UP) || GetAsyncKeyState('W')) * dt * p.speedY;
-	p.y -= (GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState('S')) * dt * p.speedY;
+	float bulletInitLife = 2000;
+
+	player.thrusting = GetKeyPress('W');
+	if(!GetKeyPress('W'))
+		player.thrusting = GetKeyPress(VK_UP);
+
+	player.trail += deltaTime * 10;
+
+	
+	player.x += GetKeyPress('D') * deltaTime * player.speedX;
+	if (!GetKeyPress('D'))
+		player.x += GetKeyPress(VK_RIGHT) * deltaTime * player.speedX;
+
+	player.x -= GetKeyPress('A') * deltaTime * player.speedX;
+	if (!GetKeyPress('A'))
+		player.x -= GetKeyPress(VK_LEFT) * deltaTime * player.speedY;
+
+	player.y -= GetKeyPress('W') * deltaTime * player.speedY;
+	if (!GetKeyPress('W'))
+		player.y -= GetKeyPress(VK_UP) * deltaTime * player.speedY;
+
+	player.y += GetKeyPress('S') * deltaTime * player.speedY;
+	if (!GetKeyPress('S'))
+		player.y += GetKeyPress(VK_DOWN) * deltaTime * player.speedY;
+
+	if (GetKeyPress(VK_SPACE) != 0)
+		player.firedShot = true;
 }
