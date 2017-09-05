@@ -2,6 +2,14 @@
 #ifndef GAMELOOP_H
 #define GAMELOOP_H
 
-void GameLoop();
+struct MainGameLoop
+{
+	bool gameOver;
+	bool playerWin;
+	bool playerLose;
+	bool playerQuit;
+};
+
+void GameLoop(MainGameLoop &gameLoop);
 
 #endif GAMELOOP_H

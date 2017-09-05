@@ -13,7 +13,13 @@ struct Bullet
 	bool intShot;
 };
 
-void UpdateBullet(Bullet bullet, float deltaTime);
-void DrawBullet(Bullet bullet[], Bullet &currentBullet, Player &player);
+// Updates the bullet movement
+void UpdateBullet(Bullet &bullet, float deltaTime);
+
+// Draws the bullet
+void DrawBullet(Bullet &currentBullet);
+
+// Intializes the bullet object
+void InitBullet(Bullet &currentBullet, Player &player);
 
 #endif BULLET_H

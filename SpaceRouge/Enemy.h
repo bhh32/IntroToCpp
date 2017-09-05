@@ -6,11 +6,23 @@
 
 struct Enemy
 {
-	int x, y;
+	float x, y;
 	float speedX, speedY;
+	
+	int velX;
+	float startX;
+	float opRange;
+	bool isAlive;
+	bool playDeath;
 };
 
-void DrawEnemy(Enemy &enemy, char newEnemy[]);
-void UpdateEnemy(Enemy &enemy, Player player, char newEnemy[], float deltaTime);
+// Draws the enemy
+void DrawEnemy(Enemy &enemy);
+
+// Updates the enemy movement
+void UpdateEnemy(Enemy &enemy, float deltaTime);
+
+// Initializes the enemy
+void InitEnemy(Enemy &enemy);
 
 #endif ENEMY_H

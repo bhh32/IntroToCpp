@@ -2,38 +2,36 @@
 #include "Screen.h"
 #include "Player.h"
 
-void UpdateBullet(Bullet bullet, float deltaTime)
+// Updates the bullets as they fly
+void UpdateBullet(Bullet &bullet, float deltaTime)
 {
-	if (bullet.lifeTime > 0)
-		bullet.y += deltaTime * bullet.speed;
+	// Checks to see if the bullet isn't dead
+	if (bullet.lifeTime >= 0)
+	{
+		// Makes the bullet fly from the player to the top of the screen
+		bullet.y -= deltaTime * bullet.speed;
+	}
 
-	bullet.lifeTime--;
+	// Decreases the lifetime by delta time
+	bullet.lifeTime -= deltaTime;
 }
 
-void DrawBullet(Bullet bullet[], Bullet &currentBullet, Player &player)
+// Intializes the bullet information
+void InitBullet(Bullet &currentBullet, Player &player)
 {
-	currentBullet.x = player.x;
+	currentBullet.lifeTime = 4;
+	currentBullet.x = player.x + 2 + 2 * player.altFire;
 	currentBullet.y = player.y;
+	currentBullet.intShot = false;
+	currentBullet.beenshot = true;
+	currentBullet.speed = 10;
+}
 
-	if (currentBullet.intShot)
-	{
-		SetChar(player.x, player.y, '|', WHITE, BLACK);
-		currentBullet.intShot = false;
-		currentBullet.beenshot = true;
-	}
-	else
-	{
-		for (int shots = 0; shots < 50; shots++)
-		{
-			if (bullet[shots].beenshot && bullet[shots].lifeTime != 0)
-			{
-				SetChar(bullet[shots].x, bullet[shots].y++, '|', WHITE, BLACK);
-			}
-			else if (!bullet[shots].beenshot || bullet[shots].lifeTime <= 0)
-			{
-				SetChar(bullet[shots].x, bullet[shots].y++, ' ', WHITE, BLACK);
-				bullet[shots].lifeTime = player.shotInitLife;
-			}
-		}
-	}
+// Draws the bullet
+void DrawBullet(Bullet &currentBullet)
+{
+	// Ensures the bullet isn't dead when it's drawn
+	if (currentBullet.lifeTime >= 0)
+		// Draws the bullet in the updated position
+		SetChar(currentBullet.x, currentBullet.y, '|', WHITE, BLACK);
 }
