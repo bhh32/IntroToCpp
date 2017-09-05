@@ -19,9 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D6DEC616-93B7-41F0-9C4D-C9893A843F91}</ProjectGuid>
-    <RootNamespace>SpaceRouge</RootNamespace>
+    <ProjectGuid>{59C1DFCE-B4E9-48AC-A6D5-976C09F7B014}</ProjectGuid>
+    <RootNamespace>My5MultiFileProjects</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>05-Multi-FileProjects</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -81,7 +82,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -110,19 +115,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="GameLoop.cpp" />
+    <ClCompile Include="dtgreet.cpp" />
+    <ClCompile Include="func.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="mathutils.cpp" />
+    <ClCompile Include="randomgen.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="GameLoop.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Screen.h" />
+    <ClInclude Include="dtgreet.h" />
+    <ClInclude Include="func.h" />
+    <ClInclude Include="mathutils.h" />
+    <ClInclude Include="randomgen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

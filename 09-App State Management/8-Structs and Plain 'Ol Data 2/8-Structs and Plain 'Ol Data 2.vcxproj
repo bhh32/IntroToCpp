@@ -19,9 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D6DEC616-93B7-41F0-9C4D-C9893A843F91}</ProjectGuid>
-    <RootNamespace>SpaceRouge</RootNamespace>
+    <ProjectGuid>{8CD38349-A414-4191-9FE3-191190064B8B}</ProjectGuid>
+    <RootNamespace>My8StructsandPlainOlData2</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>08-Structs and Plain 'Ol Data</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -110,19 +111,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="GameLoop.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="..\8-Structs and Plain %27Ol Data 2\main.cpp" />
+    <ClCompile Include="..\8-Structs and Plain %27Ol Data 2\playervszombie.cpp" />
+    <ClCompile Include="..\8-Structs and Plain %27Ol Data 2\student.cpp" />
+    <ClCompile Include="..\8-Structs and Plain %27Ol Data 2\vector2.cpp" />
+    <ClCompile Include="..\8-Structs and Plain %27Ol Data 2\wallet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="GameLoop.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Screen.h" />
+    <ClInclude Include="..\8-Structs and Plain %27Ol Data 2\playervszombie.h" />
+    <ClInclude Include="..\8-Structs and Plain %27Ol Data 2\student.h" />
+    <ClInclude Include="..\8-Structs and Plain %27Ol Data 2\vector2.h" />
+    <ClInclude Include="..\8-Structs and Plain %27Ol Data 2\wallet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
