@@ -16,9 +16,6 @@ bool isInit = false;
 // Initialized the screen buffers
 void ScreenInit()
 {
-	if (isInit)
-		isInit = isInit;
-
 	// Ensures the screen buffers aren't already initalized, if they are the program quits.
 	assert(!isInit && "ScreenInit should only be called once!");
 
@@ -186,4 +183,9 @@ HANDLE GetScreenBuffer()
 	else
 		// ... if it isn't the writeBuffer element is returned as it's the current active buffer (the buffer that is showing)
 		return buffers[writeBuffer];
+}
+
+void ScreenDeinit()
+{
+	isInit = false;
 }

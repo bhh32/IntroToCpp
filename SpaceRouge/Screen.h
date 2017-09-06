@@ -33,9 +33,13 @@ If you want to change the size, you will need to modify the source.
 
 void ScreenInit();
 
-
+// Clears the screen buffer when no longer needed
 void ScreenBufferClear();
 
+// Deinitializes the isInit variable
+void ScreenDeinit();
+
+// Gets the currently displayed buffer
 HANDLE GetScreenBuffer();
 
 /*

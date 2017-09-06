@@ -86,10 +86,16 @@ int main(void)
 					*/
 					// Sets the double buffer HANDLEs to NULL
 					ScreenBufferClear();
+					
 					// Sets the new handle to the buffer handle that's currently being displayed
 					HANDLE outHandle = GetScreenBuffer();
+
+					// Deinitializes the isInit variable
+					ScreenDeinit();
+
 					// Sets the new buffer handle to a standard output console handle
 					SetStdHandle(STD_OUTPUT_HANDLE, outHandle);
+					
 					// Sets the new buffer to be the active screen buffer
 					SetConsoleActiveScreenBuffer(outHandle);
 
