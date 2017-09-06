@@ -3,11 +3,10 @@
 #define MAIN_H
 #include "GameLoop.h"
 
-
 bool choiceMade;
 
 void Credits();
-void WinScreen();
+void WinScreen(MainGameLoop &gameLoop);
 void LoseScreen(MainGameLoop &gameLoop);
 void QuitScreen();
 

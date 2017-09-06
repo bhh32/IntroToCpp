@@ -91,10 +91,6 @@ void DrawScore(Player &player, MainGameLoop &gameLoop)
 		SetString(147, 1, playerScore, WHITE, BLACK);
 		SetString(148, 1, playerScoreDubDig, WHITE, BLACK);
 	}
-	else if (player.score >= 50)
-	{
-		gameLoop.playerWin;
-	}
 }
 
 void DrawHP(Player &player)

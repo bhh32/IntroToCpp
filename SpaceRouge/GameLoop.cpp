@@ -76,8 +76,9 @@ bool GameLoop(MainGameLoop &gameLoop)
 					{
 						bullets[j].lifeTime = 0;
 						enemies[i].isAlive = false;
-						enemies[i].playDeath = true;
+  						enemies[i].playDeath = true;
 						player.score++;
+						gameLoop.playerScore = player.score;
 					}
 
 		for (int i = 0; i < 50; ++i)
@@ -86,21 +87,24 @@ bool GameLoop(MainGameLoop &gameLoop)
 				if (PlayerEnemyCollision(player, enemies[i]))
 				{
 					enemies[i].isAlive = false;
-					// player dies? loses HP?
+					
+					
+
 					if (player.hp > 0)
 						player.hp--;
-
+					
 					if(player.hp <= 0)
 					{
 						player.isDead = true;
-						// TODO Implement End Game Menu
-
 						gameLoop.playerScore = ReturnScore(player.score);
 						ScreenClear(BLACK);
 						break;
 					}
 				}
 		}
+
+		if (gameLoop.playerScore >= 50)
+			gameLoop.playerWin = true;
 		////////////////////////////
 		// Spawning Stuff - Enemies/bullets
 

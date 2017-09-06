@@ -1,5 +1,4 @@
 #include "Screen.h"
-#include <Windows.h>
 #include <chrono>
 #include<cassert>
 
@@ -18,7 +17,7 @@ bool isInit = false;
 void ScreenInit()
 {
 	if (isInit)
-		isInit = !isInit;
+		isInit = isInit;
 
 	// Ensures the screen buffers aren't already initalized, if they are the program quits.
 	assert(!isInit && "ScreenInit should only be called once!");
@@ -166,4 +165,20 @@ int DeltaTime()
 
 	// Returns the delta time
 	return deltaTime;
+}
+
+void ScreenBufferClear()
+{
+	for (int i = 0; i < 2; ++i)
+	{
+		buffers[i] = GetStdHandle(STD_OUTPUT_HANDLE);
+	}
+}
+
+HANDLE GetScreenBuffer()
+{
+	if ((buffers[writeBuffer] = buffers[0]))
+		return buffers[1];
+	else
+		return buffers[writeBuffer];
 }

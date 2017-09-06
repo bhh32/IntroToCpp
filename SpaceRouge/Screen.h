@@ -2,7 +2,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-
+#include <Windows.h>
 /*
 The following defintions are to be used in the place of the colors
 */
@@ -32,6 +32,11 @@ If you want to change the size, you will need to modify the source.
 */
 
 void ScreenInit();
+
+
+void ScreenBufferClear();
+
+HANDLE GetScreenBuffer();
 
 /*
 Call once at the beginning of the game loop. This flips the rendering

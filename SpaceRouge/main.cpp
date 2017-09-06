@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "main.h"
 #include "GameLoop.h"
+#include "Screen.h"
 
 using std::cout;
 using std::cin;
@@ -21,10 +22,11 @@ int main(void)
 	while (true)
 	{
 		system("cls");
+		
 
 		if (gameLoop.playerWin)
 		{
-			WinScreen();
+			WinScreen(gameLoop);
 		}
 		else if (gameLoop.playerLose)
 		{
@@ -40,8 +42,25 @@ int main(void)
 			char yesNo;
 			while (!choiceMade)
 			{
-				cout << "                                                         Welcome to Bryan: Space Rouge!\n";
 				cout << "\n";
+				cout << "\n";
+				cout << "\n";
+				cout << "                                            #######    #######   ####   ####     ####         ###      ##    ####\n";
+				cout << "                                            #    ##    #    ##    ###  ###      ######        ####     ##    ####\n";
+				cout << "                                            #   ##     #   ##       ####       ##    ##       ## ##    ##    ####\n";
+				cout << "                                            # ##       # ##          ##       ####  ####      ##  ##   ##\n";
+				cout << "                                            #  ##      #  ##         ##      ############     ##   ##  ##    ####\n";
+				cout << "                                            #   ##     #   ##        ##     #####    #####    ##    ## ##    ####\n";
+				cout << "                                            ######     #    ##       ##    #####      #####   ##    #####    ####\n";
+				cout << "\n";
+				cout << "\n";
+				cout << "                     ####   ########       ####         #######     #########         #######    ########    ##      ##       #######     #########\n";
+				cout << "                  ###       ##    ###     ######       ##           ##                #    ##    #      #    ##      ##      ##           ##\n";
+				cout << "                 ###        ##   ###     ###  ###     ##            ##                #   ##     #      #    ##      ##     ##            ##\n";
+				cout << "                   ###      ## ###      ###    ###    ##            ######            #  ##      #      #    ##      ##    ##             #####\n";
+                cout << "                    ###     ####       ############   ##            ######            #  ##      #      #    ##      ##     ##   #####    #####\n";
+                cout << "                  ###       ##        ###        ###   ##           ##                #   ##     #      #    ##      ##      ##     ###   ##\n";
+                cout << "               ####         ##       ###          ###   #######     ##########        #    ##    ########     ########        ########    #########\n";
 				cout << "\n";
 				cout << "\n";
 
@@ -50,17 +69,29 @@ int main(void)
 
 				if (yesNo == 'p' || yesNo == 'P')
 				{
-					cout << "                                                                Have Fun!\n";
+					yesNo = ' ';
+					cout << "\n";
+					cout << "\n";
+					cout << "\n";
+					cout << "\n";
+					cout << "                                                                       Have Fun!\n";
 					choiceMade = true;
 					Sleep(500);
 					GameLoop(gameLoop);
+					yesNo = ' ';
+					ScreenBufferClear();
+					HANDLE outHandle = GetScreenBuffer();
+					SetStdHandle(STD_OUTPUT_HANDLE, outHandle);
+					SetConsoleActiveScreenBuffer(outHandle);
 				}
 				else if (yesNo == 'q' || yesNo == 'Q')
 				{
+					yesNo = ' ';
 					QuitScreen();
 				}
 				else if (yesNo = 'c' || yesNo == 'C')
 				{
+					yesNo = ' ';
 					Credits();
 				}
 				else
@@ -69,9 +100,7 @@ int main(void)
 					Sleep(500);
 					system("cls");
 				}
-			}
-
-			
+			}			
 			yesNo = ' ';
 			choiceMade = false;
 		}
@@ -85,7 +114,7 @@ void Credits()
 	cout << "\n";
 	cout << "\n";
 	cout << "                                                                                  CREDITS\n";
-	cout << "_________________________________________________________________________________________________________________________________________________________________________\n";
+	cout << "____________________________________________________________________________________________________________________________________________________________________________________\n";
 	cout << "\n";
 	cout << "\n";
 	cout << "\n";
@@ -110,20 +139,42 @@ void Credits()
 
 }
 
-void WinScreen()
+void WinScreen(MainGameLoop &gameLoop)
 {
+	gameLoop.playerWin = false;
+
+	char userInput;
+
 	cout << "                                                                                 YOU WIN!\n";
 	cout << "                                                                                 GREAT JOB!\n";
 	cout << "\n";
 	cout << "\n";
 	cout << "\n";
 
-	cout << "Press any key to return to the Main Menu... ";
-	getchar();
+
+	cout << "Press {m} to return to the Main Menu: ";
+	while (true)
+	{
+		cin >> userInput;
+
+		if (userInput == 'm' || userInput == 'M')
+		{
+			system("cls");
+			break;
+		}
+		else
+			cout << "You didn't choose a valid choice. Try again: ";
+	}
 }
 
 void LoseScreen(MainGameLoop &gameLoop)
 {
+	gameLoop.playerLose = false;
+
+	char userInput;
+
+	cout << "\n";
+	cout << "\n";
 	cout << "                                                                                YOU LOSE!\n";
 	cout << "                                                                                TRY AGAIN!\n";
 	cout << "                                                                                Score: " << gameLoop.playerScore << "\n";
@@ -131,8 +182,19 @@ void LoseScreen(MainGameLoop &gameLoop)
 	cout << "\n";
 	cout << "\n";
 
-	cout << "Press any key to return to the Main Menu... ";
-	getchar();
+	cout << "Press {m} to return to the Main Menu: ";
+	while (true)
+	{
+		cin >> userInput;
+
+		if (userInput == 'm' || userInput == 'M')
+		{
+			system("cls");
+			break;
+		}
+		else
+			cout << "You didn't choose a valid choice. Try again: ";
+	}
 }
 
 void QuitScreen()
