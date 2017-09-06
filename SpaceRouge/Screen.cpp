@@ -167,6 +167,7 @@ int DeltaTime()
 	return deltaTime;
 }
 
+// Sets the double buffers to standard buffer handles
 void ScreenBufferClear()
 {
 	for (int i = 0; i < 2; ++i)
@@ -175,10 +176,14 @@ void ScreenBufferClear()
 	}
 }
 
+// Returns the currently showing buffer handle (i.e. NOT the one currently being written to in the background).
 HANDLE GetScreenBuffer()
 {
+	// Checks to see if the write buffer is the first element in the buffers array
 	if ((buffers[writeBuffer] = buffers[0]))
+		// ... if it is then the opposite element is returned as it's the current active buffer (the buffer that is showing)
 		return buffers[1];
 	else
+		// ... if it isn't the writeBuffer element is returned as it's the current active buffer (the buffer that is showing)
 		return buffers[writeBuffer];
 }

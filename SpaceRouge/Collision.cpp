@@ -11,5 +11,5 @@ bool PlayerEnemyCollision(Player &player, Enemy &enemy)
 bool EnemyBulletCollision(Enemy &enemy, Bullet &bullet)
 {
 	float rad2 = (bullet.x - enemy.x)*(bullet.x - enemy.x) + (bullet.y - enemy.y)*(bullet.y - enemy.y);
-	return rad2 < 1.5;
+	return rad2 < 2;
 }

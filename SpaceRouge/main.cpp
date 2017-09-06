@@ -79,10 +79,20 @@ int main(void)
 					Sleep(500);
 					GameLoop(gameLoop);
 					yesNo = ' ';
+
+					/*
+						The following basically turns off the double buffering to allow for normal console operation. This 
+						solves the problem of screen flickering and/or nothing showing on the screen after exiting the game loop.
+					*/
+					// Sets the double buffer HANDLEs to NULL
 					ScreenBufferClear();
+					// Sets the new handle to the buffer handle that's currently being displayed
 					HANDLE outHandle = GetScreenBuffer();
+					// Sets the new buffer handle to a standard output console handle
 					SetStdHandle(STD_OUTPUT_HANDLE, outHandle);
+					// Sets the new buffer to be the active screen buffer
 					SetConsoleActiveScreenBuffer(outHandle);
+
 				}
 				else if (yesNo == 'q' || yesNo == 'Q')
 				{
