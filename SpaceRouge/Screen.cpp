@@ -17,6 +17,9 @@ bool isInit = false;
 // Initialized the screen buffers
 void ScreenInit()
 {
+	if (isInit)
+		isInit = !isInit;
+
 	// Ensures the screen buffers aren't already initalized, if they are the program quits.
 	assert(!isInit && "ScreenInit should only be called once!");
 

@@ -8,26 +8,19 @@
 #include "Collision.h"
 #include "Explosion.h"
 
-void GameLoop(MainGameLoop &gameLoop)
+bool GameLoop(MainGameLoop &gameLoop)
 {
 	ScreenInit();
+
+	
+
+	Player player;
+	InitPlayer(player);
 
 	gameLoop.gameOver = false;
 	gameLoop.playerWin = false;
 	gameLoop.playerLose = false;
-
-	Player player;
-	player.x = 10;
-	player.y = 20;
-	player.speedX = 40;
-	player.speedY = 20;
-	player.hp = 5;
-	player.trail = 0;
-	player.shotInitLife = 20;
-	player.firedShot = false;
-	player.fireDelay = .25f;
-	player.fireTimer = -1;
-	player.altFire = -1;
+	
 
 	Enemy *enemies = new Enemy[50];
 	for (int i = 0; i < 50; ++i)
@@ -49,7 +42,7 @@ void GameLoop(MainGameLoop &gameLoop)
 	float enemyTimer = 2;
 	float enemyDelay = 2;
 
-	while (!gameLoop.gameOver)
+	while(!gameLoop.gameOver)
 	{
 		BufferFlip();
 		float deltaTime = DeltaTime() / 1000.f;
@@ -57,11 +50,13 @@ void GameLoop(MainGameLoop &gameLoop)
 
 		////////////////////////////////////
 		// Update stuff
-		UpdatePlayer(player, deltaTime);
+		gameLoop.playerScore = player.score;
+
+		UpdatePlayer(player, deltaTime, gameLoop);
+
 		for (int i = 0; i < 50; ++i)
 			if (bullets[i].lifeTime >= 0)
 				UpdateBullet(bullets[i], deltaTime);
-
 
 		for (int i = 0; i < 50; ++i)
 			if (enemies[i].isAlive)
@@ -73,18 +68,20 @@ void GameLoop(MainGameLoop &gameLoop)
 
 		///////////////////////////////////
 		// Check and respond for collision
-		
+
 		for (int i = 0; i < 50; ++i)
 			for (int j = 0; j < 50; ++j)
-				if(bullets[j].lifeTime > 0 && enemies[i].isAlive)
+				if (bullets[j].lifeTime > 0 && enemies[i].isAlive)
 					if (EnemyBulletCollision(enemies[i], bullets[j]))
 					{
 						bullets[j].lifeTime = 0;
 						enemies[i].isAlive = false;
 						enemies[i].playDeath = true;
+						player.score++;
 					}
 
-		for(int i = 0; i < 50; ++i)
+		for (int i = 0; i < 50; ++i)
+		{
 			if (enemies[i].isAlive)
 				if (PlayerEnemyCollision(player, enemies[i]))
 				{
@@ -92,16 +89,22 @@ void GameLoop(MainGameLoop &gameLoop)
 					// player dies? loses HP?
 					if (player.hp > 0)
 						player.hp--;
-					else
+
+					if(player.hp <= 0)
 					{
 						player.isDead = true;
 						// TODO Implement End Game Menu
-						gameLoop.playerLose = true;
-						gameLoop.gameOver = true;
+
+						gameLoop.playerScore = ReturnScore(player.score);
+						ScreenClear(BLACK);
+						break;
 					}
 				}
+		}
 		////////////////////////////
 		// Spawning Stuff - Enemies/bullets
+
+		// Spawn Bullets
  		if (player.firedShot)
 		{
 			for (int i = 0; i < 50; ++i)
@@ -115,6 +118,7 @@ void GameLoop(MainGameLoop &gameLoop)
 			player.firedShot = false;
 		}
 
+		// Spawn Enemies
 		enemyTimer -= deltaTime;
 		if (enemyTimer < 0)
 		{
@@ -130,8 +134,10 @@ void GameLoop(MainGameLoop &gameLoop)
 			}
 		}
 
-		for(int i = 0; i < 50; ++i)
-			if(enemies[i].playDeath)
+		// Spawn Explosions between Bullets and Enemies
+		for (int i = 0; i < 50; ++i)
+		{
+			if (enemies[i].playDeath)
 				for (int k = 0; k < 50; ++k)
 					if (explosions[k].lifetime < 0)
 					{
@@ -139,7 +145,16 @@ void GameLoop(MainGameLoop &gameLoop)
 						enemies[i].playDeath = false;
 						break;
 					}
-
+		}
+		// Spawn an explosion if the player is killed
+		
+			if (player.isDead)
+				for (int l = 0; l < 50; ++l)
+					if (explosions[l].lifetime < 0)
+					{
+						InitExplosion(explosions[l], player.x, player.y);
+						break;
+					}
 		/////////////////////////////
 		// Drawing Stuff - all the things
 		for (int i = 0; i < 50; ++i)
@@ -153,33 +168,30 @@ void GameLoop(MainGameLoop &gameLoop)
 		for (int i = 0; i < 50; ++i)
 			if (explosions[i].lifetime >= 0)
 				DrawExplosion(explosions[i]);
-		DrawPlayer(player);		
-	}
 
-	// Checks to ensure the proper screen comes up when leaving the game loop
-	if (gameLoop.playerWin && gameLoop.gameOver)
-	{
-		gameLoop.playerLose = false;
-		gameLoop.playerQuit = false;
-		return;
+		if (!player.isDead)
+		{
+			DrawPlayer(player);
+			DrawHP(player);
+			DrawScore(player, gameLoop);
+		}
+		if (gameLoop.playerWin)
+		{
+			gameLoop.gameOver = true;
+			break;
+		}
+		else if (gameLoop.playerLose)
+		{
+			gameLoop.gameOver = true;
+			break;
+		}
+		else if (gameLoop.playerQuit)
+		{
+			gameLoop.gameOver = true;
+			break;
+		}
+
 	}
-	else if (gameLoop.playerLose && gameLoop.gameOver)
-	{
-		gameLoop.playerWin = false;
-		gameLoop.playerQuit = false;
-		return;
-	}
-	else if (gameLoop.gameOver && gameLoop.playerQuit)
-	{
-		gameLoop.playerWin = false;
-		gameLoop.playerLose = false;
-		return;
-	}
-	else
-	{
-		gameLoop.playerLose = false;
-		gameLoop.playerQuit = false;
-		gameLoop.playerWin = false;
-		return;
-	}
+	BufferFlip();
+	return gameLoop.gameOver;
 }
