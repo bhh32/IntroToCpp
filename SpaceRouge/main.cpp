@@ -6,6 +6,7 @@
 
 using std::cout;
 using std::cin;
+using std::getline;
 
 int main(void)
 {
@@ -18,24 +19,28 @@ int main(void)
 	gameLoop.playerQuit = false;
 	gameLoop.playerWin = false;
 	gameLoop.playerScore = 0;
+	gameLoop.name = ' ';
+	gameLoop.highScore1 = 0;
+	gameLoop.highScore2 = 0;
+	gameLoop.highScore3 = 0;
+	
+
+	cout << "Before we start the game, What is your name? ";
+	getline(cin, gameLoop.name);
 
 	while (true)
 	{
 		system("cls");
 		
 
-		if (gameLoop.playerWin)
-		{
-			WinScreen(gameLoop);
-		}
-		else if (gameLoop.playerLose)
+		if (gameLoop.playerLose)
 		{
 			LoseScreen(gameLoop);
 		}
 		else if (gameLoop.playerQuit)
 		{
 			system("cls");
-			QuitScreen();
+			QuitScreen(gameLoop);
 		}
 		else
 		{
@@ -99,11 +104,13 @@ int main(void)
 					// Sets the new buffer to be the active screen buffer
 					SetConsoleActiveScreenBuffer(outHandle);
 
+					//SaveHighScore(gameLoop, gameLoop.name);
+
 				}
 				else if (yesNo == 'q' || yesNo == 'Q')
 				{
 					yesNo = ' ';
-					QuitScreen();
+					QuitScreen(gameLoop);
 				}
 				else if (yesNo = 'c' || yesNo == 'C')
 				{
@@ -213,9 +220,11 @@ void LoseScreen(MainGameLoop &gameLoop)
 	}
 }
 
-void QuitScreen()
+void QuitScreen(MainGameLoop &gameLoop)
 {
 	system("cls");
+
+	SaveHighScore(gameLoop, gameLoop.name);
 	cout << "\n";
 	cout << "\n";
 	cout << "\n";

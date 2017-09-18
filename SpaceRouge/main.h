@@ -8,6 +8,6 @@ bool choiceMade;
 void Credits();
 void WinScreen(MainGameLoop &gameLoop);
 void LoseScreen(MainGameLoop &gameLoop);
-void QuitScreen();
+void QuitScreen(MainGameLoop &gameLoop);
 
 #endif MAIN_H

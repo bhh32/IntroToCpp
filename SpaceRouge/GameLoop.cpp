@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include<Windows.h>
 #include "GameLoop.h"
 #include "Screen.h"
@@ -7,6 +8,13 @@
 #include "Bullet.h"
 #include "Collision.h"
 #include "Explosion.h"
+
+using std::fstream;
+using std::string;
+using std::getline;
+using std::cout;
+using std::cin;
+using std::endl;
 
 bool GameLoop(MainGameLoop &gameLoop)
 {
@@ -246,16 +254,8 @@ bool GameLoop(MainGameLoop &gameLoop)
 			DrawScore(player, gameLoop);
 		}
 
-		// If the win condition is true
-		if (gameLoop.playerWin)
-		{
-			// ... say the game is over
-			gameLoop.gameOver = true;
-			// break from the game loop
-			break;
-		}
 		// If the loss condition is true
-		else if (gameLoop.playerLose)
+		if (gameLoop.playerLose)
 		{
 			// ... say the game is over
 			gameLoop.gameOver = true;
@@ -267,6 +267,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 		{
 			// ... say the game is over
 			gameLoop.gameOver = true;
+
 			// break from the game loop
 			break;
 		}
@@ -274,4 +275,146 @@ bool GameLoop(MainGameLoop &gameLoop)
 	}
 	// return that the game is over
 	return gameLoop.gameOver;
+}
+
+void SaveHighScore(MainGameLoop &gameLoop, string name)
+{
+	fstream highScoreFile;
+	bool endOfFile = false;
+	string buffer;
+	
+	
+
+	LoadHighScore(gameLoop);
+
+	highScoreFile.open("HighScores.txt", std::ios::out);
+
+	if (highScoreFile.is_open())
+	{
+		while (!endOfFile)
+		{
+			if (gameLoop.playerScore > gameLoop.highScore1)
+			{
+				gameLoop.highScore1 = gameLoop.playerScore;
+				gameLoop.hsName1 = name;
+				highScoreFile << "1.) " << name << ": " << gameLoop.highScore1 << endl;
+			}
+			else if (gameLoop.playerScore < gameLoop.highScore1 && gameLoop.playerScore > gameLoop.playerScore)
+			{
+				gameLoop.highScore2 = gameLoop.playerScore;
+				gameLoop.hsName2 = name;
+				highScoreFile << "2.) " << name << ": " << gameLoop.highScore1 << endl;
+			}
+			else if (gameLoop.playerScore < gameLoop.highScore2 && gameLoop.playerScore > gameLoop.highScore3)
+			{
+				gameLoop.highScore3 = gameLoop.playerScore;
+				gameLoop.hsName3 = name;
+				highScoreFile << "3.) " << name << ": " << gameLoop.highScore1 << endl;
+				endOfFile = true;
+			}
+		}
+	}
+
+	
+	
+		//return;
+
+	/*if (highScoreFile.is_open())
+	{
+
+
+
+
+
+		while (getline(highScoreFile, buffer))
+		{
+			if (buffer[0] == '1')
+			{
+				highScoreFile << "1.) " << name << ": " << gameLoop.highScore1 << endl;
+			}
+			else if (buffer[0] == '2')
+			{
+				highScoreFile << "2.) " << name << ": " << gameLoop.highScore2 << endl;
+			}
+			else if (buffer[0] == '3')
+			{
+				highScoreFile << "3.) " << name << ": " << gameLoop.highScore2 << endl;
+				endOfFile = true;
+				break;
+			}
+		}
+	}*/
+	highScoreFile.flush();
+	highScoreFile.close();
+}
+
+void LoadHighScore(MainGameLoop &gameLoop)
+{
+	string buffer;
+	fstream highScoreFile;
+
+
+	/*1.) No Name : 0
+	2.) No Name : 0
+	3.) No Name : 0*/
+
+
+	highScoreFile.open("HighScores.txt", std::ios::in);
+
+	if (highScoreFile.is_open())
+	{
+		while (getline(highScoreFile, buffer))
+		{
+			for (int i = 0; i < buffer.length(); ++i)
+			{
+				if (buffer[i] == ':')
+				{
+					// If it's the first high score add the high score to that line in the correct place
+					if (buffer[0] == '1')
+						buffer[i + 2] >> gameLoop.highScore1;
+					else if (buffer[i + 3] != ' ' && buffer[0] == '1')
+					{
+						buffer[i + 2] && buffer[i = 3] >> gameLoop.highScore1;
+					}
+					else if (buffer[i + 4 != ' '] && buffer[0] == '1')
+						gameLoop.highScore1 = (int)(buffer[i + 2] + buffer[i + 3] + buffer[i + 4]);
+					// If it's the second high score add the high score to that line in the correct place
+					else if (buffer[0] == '2')
+						gameLoop.highScore2 = (int)(buffer[i + 2]);
+					else if (buffer[i + 3] != ' ' && buffer[0] == '2')
+						gameLoop.highScore2 = (int)(buffer[i + 2] + buffer[i + 3]);
+					else if (buffer[i + 4 != ' '] && buffer[0] == '2')
+						gameLoop.highScore2 = (int)(buffer[i + 2] + buffer[i + 3] + buffer[i + 4]);
+					// If it's the third high score add the high score to that line in the correct place
+					else if (buffer[0] == '3')
+						gameLoop.highScore3 = (int)(buffer[i + 2]);
+					else if (buffer[i + 3] != ' ' && buffer[0] == '3')
+						gameLoop.highScore3 = (int)(buffer[i + 2] + buffer[i + 3]);
+					else if (buffer[i + 4 != ' '] && buffer[0] == '3')
+						gameLoop.highScore3 = (int)(buffer[i + 2] + buffer[i + 3] + buffer[i + 4]);
+
+				}
+			}
+		}
+	}
+
+	highScoreFile.close();
+}
+
+void PrintHighScore()
+{
+	string buffer;
+	fstream highScoreFile;
+
+	highScoreFile.open("HighScores.txt");
+
+	if (highScoreFile.is_open())
+	{
+		while (getline(highScoreFile, buffer))
+		{
+			cout << buffer << endl;
+		}
+	}
+
+	highScoreFile.close();
 }
