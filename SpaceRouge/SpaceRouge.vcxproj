@@ -116,6 +116,7 @@
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pickup.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Screen.cpp" />
   </ItemGroup>
@@ -126,6 +127,7 @@
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="GameLoop.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Pickup.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Screen.h" />
   </ItemGroup>

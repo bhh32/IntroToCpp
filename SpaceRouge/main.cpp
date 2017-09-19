@@ -23,10 +23,6 @@ int main(void)
 	gameLoop.highScore1 = 0;
 	gameLoop.highScore2 = 0;
 	gameLoop.highScore3 = 0;
-	
-
-	cout << "Before we start the game, What is your name? ";
-	getline(cin, gameLoop.name);
 
 	while (true)
 	{
@@ -69,7 +65,7 @@ int main(void)
 				cout << "\n";
 				cout << "\n";
 
-				cout << "Would you like to play the game, quit, or go to the credits? {p}/{q}/{c}: ";
+				cout << "Would you like to play the game, quit, see the high scores, or go to the credits? {p}/{q}/{h}/{c}: ";
 				cin >> yesNo;
 
 				if (yesNo == 'p' || yesNo == 'P')
@@ -112,10 +108,15 @@ int main(void)
 					yesNo = ' ';
 					QuitScreen(gameLoop);
 				}
-				else if (yesNo = 'c' || yesNo == 'C')
+				else if (yesNo == 'c' || yesNo == 'C')
 				{
 					yesNo = ' ';
 					Credits();
+				}
+				else if (yesNo == 'h' || yesNo == 'H')
+				{
+					yesNo = ' ';
+					HighScores(gameLoop);
 				}
 				else
 				{
@@ -162,17 +163,19 @@ void Credits()
 
 }
 
-void WinScreen(MainGameLoop &gameLoop)
+void HighScores(MainGameLoop &gameLoop)
 {
-	gameLoop.playerWin = false;
+	system("cls");
 
 	char userInput;
 
-	cout << "                                                                                 YOU WIN!\n";
-	cout << "                                                                                 GREAT JOB!\n";
+	cout << "                                                                                 HIGH SCORES!\n";
 	cout << "\n";
 	cout << "\n";
 	cout << "\n";
+	cout << "\n";
+
+	PrintHighScore();
 
 
 	cout << "Press {m} to return to the Main Menu: ";
@@ -229,6 +232,12 @@ void QuitScreen(MainGameLoop &gameLoop)
 	cout << "\n";
 	cout << "\n";
 	cout << "                                                                              Sorry To See You Go!\n";
-	Sleep(500);
+	cout << "\n";
+	cout << "\n";
+	cout << "\n";
+	cout << "\n";
+	PrintHighScore();	
+	
+	Sleep(3000);
 	exit(0);
 }

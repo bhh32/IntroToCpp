@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include<Windows.h>
 #include "GameLoop.h"
 #include "Screen.h"
@@ -8,6 +9,7 @@
 #include "Bullet.h"
 #include "Collision.h"
 #include "Explosion.h"
+#include "Pickup.h"
 
 using std::fstream;
 using std::string;
@@ -18,6 +20,19 @@ using std::endl;
 
 bool GameLoop(MainGameLoop &gameLoop)
 {
+	
+	cout << "Before we start the game, What is your name? ";
+		
+	while (true)
+	{
+		cin >> gameLoop.name;
+
+		if (gameLoop.name == " ")
+			cout << "You didn't enter your name, please do so: ";
+		else
+			break;
+	}
+
 	// Initiate the double buffers
 	ScreenInit();
 
@@ -49,10 +64,19 @@ bool GameLoop(MainGameLoop &gameLoop)
 	Explosion *explosions = new Explosion[50];
 	for (int i = 0; i < 50; i++)	
 		explosions[i].lifetime = -1;
+
+	// Create the pickups
+	Pickup *pickups = new Pickup[50];
+	for (int i = 0; i < 50; ++i)
+		pickups[i].isPickedUp = true;
 	
 	// Create the spawn timers
 	float enemyTimer = 2;
 	float enemyDelay = 2;
+	float pickupTimer = 10.f;
+	float pickupDelay = 20.f;
+
+	float deltaTime = DeltaTime();
 
 	// Main Game Loop
 	while(!gameLoop.gameOver)
@@ -93,6 +117,13 @@ bool GameLoop(MainGameLoop &gameLoop)
 			if (explosions[i].lifetime >= 0)
 				// Update all of the alive explosions
 				UpdateExplosion(explosions[i], deltaTime);
+
+		// Loop through all of the pickups
+		for (int i = 0; i < 50; ++i)
+			// Get the pickups that haven't been picked up
+			if (!pickups[i].isPickedUp)
+				// Update all of the unpicked up pickups
+				UpdatePickup(pickups[i], deltaTime);
 
 		///////////////////////////////////
 		// Check and respond for collision
@@ -143,14 +174,23 @@ bool GameLoop(MainGameLoop &gameLoop)
 				}
 		}
 
-		// Checks to see if the players score is >= 50
-		if (gameLoop.playerScore >= 50)
+		// Checks for collision between the player and the pickups
+		for (int i = 0; i < 50; ++i)
 		{
-			// ... if it is set the win condition to true
-			gameLoop.playerWin = true;
+			// Checks to ensure that the collided haven't been picked up
+			if (!pickups[i].isPickedUp)
+				if (PlayerPickupCollision(player, pickups[i]))
+				{
+					// If they haven't it sets them to picked up
+					pickups[i].isPickedUp = true;
 
-			// break from the game loop
-			break;
+						// Clear the Screen
+						ScreenClear(BLACK);
+
+						// Break from this for loop
+						break;
+					}
+				}
 		}
 
 		////////////////////////////
@@ -167,6 +207,9 @@ bool GameLoop(MainGameLoop &gameLoop)
 				{
 					// Initiate the bullet
 					InitBullet(bullets[i], player);
+
+					if (pickups[i].isPickedUp)
+						bullets[i].speed += 5;
 					// break from this for loop
 					break;
 				}
@@ -291,59 +334,39 @@ void SaveHighScore(MainGameLoop &gameLoop, string name)
 
 	if (highScoreFile.is_open())
 	{
-		while (!endOfFile)
+		while (true)
 		{
 			if (gameLoop.playerScore > gameLoop.highScore1)
 			{
+				gameLoop.highScore2 = gameLoop.highScore1;
+				gameLoop.hsName2 = gameLoop.highScore1;
+
 				gameLoop.highScore1 = gameLoop.playerScore;
-				gameLoop.hsName1 = name;
-				highScoreFile << "1.) " << name << ": " << gameLoop.highScore1 << endl;
+				gameLoop.hsName1 = name;				
 			}
-			else if (gameLoop.playerScore < gameLoop.highScore1 && gameLoop.playerScore > gameLoop.playerScore)
+			else if (gameLoop.playerScore < gameLoop.highScore1 && gameLoop.playerScore > gameLoop.highScore2)
 			{
+				gameLoop.highScore3 = gameLoop.highScore2;
+				gameLoop.hsName3 = gameLoop.hsName2;
+
 				gameLoop.highScore2 = gameLoop.playerScore;
 				gameLoop.hsName2 = name;
-				highScoreFile << "2.) " << name << ": " << gameLoop.highScore1 << endl;
+
 			}
 			else if (gameLoop.playerScore < gameLoop.highScore2 && gameLoop.playerScore > gameLoop.highScore3)
 			{
 				gameLoop.highScore3 = gameLoop.playerScore;
 				gameLoop.hsName3 = name;
-				highScoreFile << "3.) " << name << ": " << gameLoop.highScore1 << endl;
-				endOfFile = true;
 			}
+			
+			break;
 		}
+
+		highScoreFile << gameLoop.hsName1 << " " << gameLoop.highScore1 << endl;
+		highScoreFile << gameLoop.hsName2 << " " << gameLoop.highScore2 << endl;
+		highScoreFile << gameLoop.hsName3 << " " << gameLoop.highScore3 << endl;
 	}
 
-	
-	
-		//return;
-
-	/*if (highScoreFile.is_open())
-	{
-
-
-
-
-
-		while (getline(highScoreFile, buffer))
-		{
-			if (buffer[0] == '1')
-			{
-				highScoreFile << "1.) " << name << ": " << gameLoop.highScore1 << endl;
-			}
-			else if (buffer[0] == '2')
-			{
-				highScoreFile << "2.) " << name << ": " << gameLoop.highScore2 << endl;
-			}
-			else if (buffer[0] == '3')
-			{
-				highScoreFile << "3.) " << name << ": " << gameLoop.highScore2 << endl;
-				endOfFile = true;
-				break;
-			}
-		}
-	}*/
 	highScoreFile.flush();
 	highScoreFile.close();
 }
@@ -351,12 +374,13 @@ void SaveHighScore(MainGameLoop &gameLoop, string name)
 void LoadHighScore(MainGameLoop &gameLoop)
 {
 	string buffer;
+	string name;
+	string hs;
+	string charSplit;
+	string charActual;
 	fstream highScoreFile;
 
-
-	/*1.) No Name : 0
-	2.) No Name : 0
-	3.) No Name : 0*/
+	int count = 0;
 
 
 	highScoreFile.open("HighScores.txt", std::ios::in);
@@ -365,36 +389,32 @@ void LoadHighScore(MainGameLoop &gameLoop)
 	{
 		while (getline(highScoreFile, buffer))
 		{
-			for (int i = 0; i < buffer.length(); ++i)
-			{
-				if (buffer[i] == ':')
-				{
-					// If it's the first high score add the high score to that line in the correct place
-					if (buffer[0] == '1')
-						buffer[i + 2] >> gameLoop.highScore1;
-					else if (buffer[i + 3] != ' ' && buffer[0] == '1')
-					{
-						buffer[i + 2] && buffer[i = 3] >> gameLoop.highScore1;
-					}
-					else if (buffer[i + 4 != ' '] && buffer[0] == '1')
-						gameLoop.highScore1 = (int)(buffer[i + 2] + buffer[i + 3] + buffer[i + 4]);
-					// If it's the second high score add the high score to that line in the correct place
-					else if (buffer[0] == '2')
-						gameLoop.highScore2 = (int)(buffer[i + 2]);
-					else if (buffer[i + 3] != ' ' && buffer[0] == '2')
-						gameLoop.highScore2 = (int)(buffer[i + 2] + buffer[i + 3]);
-					else if (buffer[i + 4 != ' '] && buffer[0] == '2')
-						gameLoop.highScore2 = (int)(buffer[i + 2] + buffer[i + 3] + buffer[i + 4]);
-					// If it's the third high score add the high score to that line in the correct place
-					else if (buffer[0] == '3')
-						gameLoop.highScore3 = (int)(buffer[i + 2]);
-					else if (buffer[i + 3] != ' ' && buffer[0] == '3')
-						gameLoop.highScore3 = (int)(buffer[i + 2] + buffer[i + 3]);
-					else if (buffer[i + 4 != ' '] && buffer[0] == '3')
-						gameLoop.highScore3 = (int)(buffer[i + 2] + buffer[i + 3] + buffer[i + 4]);
+			std::istringstream iss(buffer);
+			iss >> name;
+			iss >> hs;
 
-				}
+
+			switch (count)
+			{
+			case 0:
+				gameLoop.hsName1 = name;
+				gameLoop.highScore1 = std::stof(hs);
+				break;
+			case 1:
+				gameLoop.hsName2 = name;
+				gameLoop.highScore2 = std::stof(hs);
+				break;
+			case 2:
+				gameLoop.hsName3 = name;
+				gameLoop.highScore3 = std::stof(hs);
+				break;
+			default:
+				cout << "Something went wrong!" << endl;
 			}
+
+			count++;
+			name.clear();
+			hs.clear();
 		}
 	}
 

@@ -6,7 +6,7 @@
 bool choiceMade;
 
 void Credits();
-void WinScreen(MainGameLoop &gameLoop);
+void HighScores(MainGameLoop &gameLoop);
 void LoseScreen(MainGameLoop &gameLoop);
 void QuitScreen(MainGameLoop &gameLoop);
 
