@@ -366,7 +366,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 		}
 	
 	}
-	SetString(55, 35, "YOU LOSE! PRESS A KEY TO CONTINUE!", LIGHT_RED, BLACK);
+	SetString(55, 35, "GAME OVER! PRESS ANY KEY TO CONTINUE!", LIGHT_RED, BLACK);
 	BufferFlip();
 	system("pause");
 
@@ -381,8 +381,6 @@ return gameLoop.gameOver;
 		bool endOfFile = false;
 		string buffer;
 
-
-
 		LoadHighScore(gameLoop);
 
 		highScoreFile.open("HighScores.txt", std::ios::out);
@@ -394,7 +392,7 @@ return gameLoop.gameOver;
 				if (gameLoop.playerScore > gameLoop.highScore1)
 				{
 					gameLoop.highScore2 = gameLoop.highScore1;
-					gameLoop.hsName2 = gameLoop.highScore1;
+					gameLoop.hsName2 = gameLoop.hsName1;
 
 					gameLoop.highScore1 = gameLoop.playerScore;
 					gameLoop.hsName1 = name;
