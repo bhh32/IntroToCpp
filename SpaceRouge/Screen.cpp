@@ -1,6 +1,6 @@
 #include "Screen.h"
 #include <chrono>
-#include<cassert>
+#include <cassert>
 
 using namespace std::chrono;
 
@@ -97,6 +97,35 @@ void SetString(int x, int y, const char string[], short foreColor, short backCol
 
 	// Gets the length of the string array
 	short len = strlen(string);
+
+	// Loop to set the attributes of each character in the array
+	for (int i = 0; i < len && i < 80; ++i)
+	{
+		chi[i].Char.AsciiChar = string[i];
+		chi[i].Attributes = foreColor | (backColor << 4);
+	}
+
+	// Places the string in the designated coordinates
+	SMALL_RECT rect;
+	rect.Left = x;
+	rect.Right = x + len;
+	rect.Top = y;
+	rect.Bottom = y + 1;
+
+	// Writes the string to the current write buffer in the designated coordinates
+	WriteConsoleOutputA(buffers[writeBuffer], chi, { len,1 }, { 0,0 }, &rect);
+}
+
+void SetString(int x, int y, std::string string, short foreColor, short backColor)
+{
+	// Ensures the screen buffers are initialized, if they aren't the program quits.
+	assert(isInit && "ScreenInit must be initialized.");
+
+	// Creates an array of CHAR_INFO type
+	CHAR_INFO chi[80];
+
+	// Gets the length of the string array
+	short len = string.length();
 
 	// Loop to set the attributes of each character in the array
 	for (int i = 0; i < len && i < 80; ++i)

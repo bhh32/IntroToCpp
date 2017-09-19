@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include <Windows.h>
 #include "main.h"
 #include "GameLoop.h"
@@ -31,10 +32,12 @@ int main(void)
 
 		if (gameLoop.playerLose)
 		{
+			cin.clear();
 			LoseScreen(gameLoop);
 		}
 		else if (gameLoop.playerQuit)
 		{
+			cin.clear();
 			system("cls");
 			QuitScreen(gameLoop);
 		}
@@ -177,7 +180,8 @@ void HighScores(MainGameLoop &gameLoop)
 
 	PrintHighScore();
 
-
+	cout << "\n";
+	cout << "\n";
 	cout << "Press {m} to return to the Main Menu: ";
 	while (true)
 	{
@@ -195,22 +199,27 @@ void HighScores(MainGameLoop &gameLoop)
 
 void LoseScreen(MainGameLoop &gameLoop)
 {
+	
 	gameLoop.playerLose = false;
-
+	
 	char userInput;
 
 	cout << "\n";
 	cout << "\n";
-	cout << "                                                                                YOU LOSE!\n";
-	cout << "                                                                                TRY AGAIN!\n";
+	cout << "                                                                                HIGH SCORES\n";
+	cout << "                                                                                 TRY AGAIN!\n";
 	cout << "                                                                                Score: " << gameLoop.playerScore << "\n";
 	cout << "\n";
 	cout << "\n";
 	cout << "\n";
 
+	
+
 	cout << "Press {m} to return to the Main Menu: ";
+	
 	while (true)
 	{
+		userInput = ' ';
 		cin >> userInput;
 
 		if (userInput == 'm' || userInput == 'M')
@@ -236,6 +245,9 @@ void QuitScreen(MainGameLoop &gameLoop)
 	cout << "\n";
 	cout << "\n";
 	cout << "\n";
+	cout << "\n";
+	cout << "\n";
+	cout << "                                                                                 High Scores!\n";
 	PrintHighScore();	
 	
 	Sleep(3000);

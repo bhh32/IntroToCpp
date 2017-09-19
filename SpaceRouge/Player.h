@@ -11,6 +11,7 @@ struct Player
 	int hp;
 	int score;
 	bool isDead;
+	bool pickupCollide;
 
 	// Thrusting Variables
 	float trail;
@@ -19,6 +20,7 @@ struct Player
 	// Fire Cannon Variables
 	float shotInitLife;
 	int altFire;
+	int fireRate;
 	bool firedShot;
 	float fireDelay;
 	float fireTimer;

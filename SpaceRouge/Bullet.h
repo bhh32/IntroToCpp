@@ -11,10 +11,11 @@ struct Bullet
 	float speed;
 	bool beenshot;
 	bool intShot;
+
 };
 
 // Updates the bullet movement
-void UpdateBullet(Bullet &bullet, float deltaTime);
+void UpdateBullet(Bullet &bullet, Player & player, float deltaTime);
 
 // Draws the bullet
 void DrawBullet(Bullet &currentBullet);

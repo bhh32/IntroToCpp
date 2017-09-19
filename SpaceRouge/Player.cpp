@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <string>
 #include "Screen.h"
 #include "Player.h"
 #include "Bullet.h"
@@ -14,6 +15,8 @@ void InitPlayer(Player &player)
 	player.trail = 0;
 	player.shotInitLife = 20;
 	player.isDead = false;
+	player.pickupCollide = false;
+	player.fireRate = 0;
 	player.firedShot = false;
 	player.fireDelay = .25f;
 	player.fireTimer = -1;
@@ -45,94 +48,11 @@ void DrawPlayer(Player &player)
 void DrawScore(Player &player, MainGameLoop &gameLoop)
 {
 	char score[80] = { "Score: \0" };
-	char playerScore[10];
-	char playerScoreDubDig[10];
-	int playerScoreTemp = player.score % 50;
-	for (int i = 0; i < 2; ++i)
-	{
-		playerScore[i] = { 0 };
-		playerScoreDubDig[i] = { 0 };
-	}
-
-	if (player.score < 10)
-	{
-		playerScore[0] = (char)player.score + 48;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-	}
-	else if (player.score >= 10 && player.score < 20)
-	{
-		playerScore[0] = (char)49;
-		playerScoreDubDig[0] = (char)player.score + 38;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
-	else if (player.score >= 20 && player.score < 30)
-	{
-		playerScore[0] = (char)50;
-		playerScoreDubDig[0] = (char)player.score + 28;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
-	else if (player.score >= 30 && player.score < 40)
-	{
-		playerScore[0] = (char)51;
-		playerScoreDubDig[0] = (char)player.score + 18;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
-	else if (player.score >= 40 && player.score < 50)
-	{
-		playerScore[0] = (char)52;
-		playerScoreDubDig[0] = (char)player.score + 8;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
-	else if (player.score >= 50 && player.score < 60)
-	{
-		playerScore[0] = (char)53;
-		playerScoreDubDig[0] = (char)playerScoreTemp + 48;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
-	else if (player.score >= 60 && player.score < 70)
-	{
-		playerScore[0] = (char)54;
-		
-		playerScoreDubDig[0] = (char)playerScoreTemp + 38;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
-	else if (player.score >= 70 && player.score < 80)
-	{
-		playerScore[0] = (char)55;
-		playerScoreDubDig[0] = (char)playerScoreTemp + 28;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
-	else if (player.score >= 80 && player.score < 90)
-	{
-		playerScore[0] = (char)56;
-		playerScoreDubDig[0] = (char)playerScoreTemp + 18;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
-	else if (player.score >= 90 && player.score < 100)
-	{
-		playerScore[0] = (char)57;
-		playerScoreDubDig[0] = (char)playerScoreTemp + 8;
-		SetString(139, 1, score, WHITE, BLACK);
-		SetString(146, 1, playerScore, WHITE, BLACK);
-		SetString(147, 1, playerScoreDubDig, WHITE, BLACK);
-	}
+	
+	std::string playerScoreString = std::to_string(player.score);
+	
+	SetString(130, 1, score, WHITE, BLACK);
+	SetString(137, 1, playerScoreString, WHITE, BLACK);
 }
 
 void DrawHP(Player &player)

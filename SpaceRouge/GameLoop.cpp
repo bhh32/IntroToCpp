@@ -20,9 +20,9 @@ using std::endl;
 
 bool GameLoop(MainGameLoop &gameLoop)
 {
-	
-	cout << "Before we start the game, What is your name? ";
-		
+
+	cout << "                                                   Before we start the game, What is your name?\n";
+
 	while (true)
 	{
 		cin >> gameLoop.name;
@@ -43,9 +43,8 @@ bool GameLoop(MainGameLoop &gameLoop)
 
 	// Set the game state conditions to false
 	gameLoop.gameOver = false;
-	gameLoop.playerWin = false;
 	gameLoop.playerLose = false;
-	
+
 	// Create the enemies
 	Enemy *enemies = new Enemy[50];
 	for (int i = 0; i < 50; ++i)
@@ -61,15 +60,15 @@ bool GameLoop(MainGameLoop &gameLoop)
 	}
 
 	// Create the explosions
-	Explosion *explosions = new Explosion[50];
-	for (int i = 0; i < 50; i++)	
+	Explosion *explosions = new Explosion[200];
+	for (int i = 0; i < 200; i++)
 		explosions[i].lifetime = -1;
 
 	// Create the pickups
 	Pickup *pickups = new Pickup[50];
 	for (int i = 0; i < 50; ++i)
 		pickups[i].isPickedUp = true;
-	
+
 	// Create the spawn timers
 	float enemyTimer = 2;
 	float enemyDelay = 2;
@@ -79,7 +78,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 	float deltaTime = DeltaTime();
 
 	// Main Game Loop
-	while(!gameLoop.gameOver)
+	while (!gameLoop.gameOver)
 	{
 		// Flip the write and display buffers
 		BufferFlip();
@@ -102,7 +101,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 			// Get the bullets that are alive
 			if (bullets[i].lifeTime >= 0)
 				// Update all of the bullets that are alive
-				UpdateBullet(bullets[i], deltaTime);
+				UpdateBullet(bullets[i], player, deltaTime);
 
 		// Loop through all of the enemies
 		for (int i = 0; i < 50; ++i)
@@ -112,56 +111,69 @@ bool GameLoop(MainGameLoop &gameLoop)
 				UpdateEnemy(enemies[i], deltaTime);
 
 		// Loop through all of the explosions
-		for (int i = 0; i < 50; ++i)
+		for (int i = 0; i < 200; ++i)
+		{
 			// Get the explosions that are alive
 			if (explosions[i].lifetime >= 0)
-				// Update all of the alive explosions
+			{	// Update all of the alive explosions
 				UpdateExplosion(explosions[i], deltaTime);
+			}
+		}
 
 		// Loop through all of the pickups
 		for (int i = 0; i < 50; ++i)
+		{
 			// Get the pickups that haven't been picked up
 			if (!pickups[i].isPickedUp)
+			{
 				// Update all of the unpicked up pickups
 				UpdatePickup(pickups[i], deltaTime);
-
+			}
+		}
 		///////////////////////////////////
 		// Check and respond for collision
-		
+
 		// Checks for collions between the enemies and bullets
 		for (int i = 0; i < 50; ++i)
+		{
 			for (int j = 0; j < 50; ++j)
+			{
 				if (bullets[j].lifeTime > 0 && enemies[i].isAlive)
+				{
 					if (EnemyBulletCollision(enemies[i], bullets[j]))
 					{
 						bullets[j].lifeTime = 0;
 						enemies[i].isAlive = false;
-  						enemies[i].playDeath = true;
+						enemies[i].playDeath = true;
 						player.score++;
 						gameLoop.playerScore = player.score;
 					}
+				}
+			}
+		}
 
 		// Checks for collision between the player and the enemies
 		for (int i = 0; i < 50; ++i)
 		{
 			// Checks to ensure that the collided enemies are alive
 			if (enemies[i].isAlive)
+			{
 				if (PlayerEnemyCollision(player, enemies[i]))
 				{
 					// If they are it sets them to dead (isAlive = false)
-					enemies[i].isAlive = false;					
+					enemies[i].isAlive = false;
 
 					// Checks to make sure the player's hp is greater than 0
 					if (player.hp > 0)
-						// ... if it is decrement the hp by 1
+					{	// ... if it is decrement the hp by 1
 						player.hp--;
-					
+					}
 					// Checks to see if the player's hp is <= 0
-					if(player.hp <= 0)
+					if (player.hp <= 0)
 					{
 						// ... if it is, set player to dead
 						player.isDead = true;
-						
+
 						// ... ensure the game loop score is set to the player's score
 						gameLoop.playerScore = ReturnScore(player.score);
 
@@ -172,6 +184,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 						break;
 					}
 				}
+			}
 		}
 
 		// Checks for collision between the player and the pickups
@@ -179,38 +192,40 @@ bool GameLoop(MainGameLoop &gameLoop)
 		{
 			// Checks to ensure that the collided haven't been picked up
 			if (!pickups[i].isPickedUp)
+			{
 				if (PlayerPickupCollision(player, pickups[i]))
 				{
 					// If they haven't it sets them to picked up
 					pickups[i].isPickedUp = true;
+					
+					// If the pickup is collided with, set the flag for the player and bullets
+					player.pickupCollide = true;
+					
+					// Clear the Screen
+					ScreenClear(BLACK);
 
-						// Clear the Screen
-						ScreenClear(BLACK);
-
-						// Break from this for loop
-						break;
-					}
+					// Break from this for loop
+					break;
 				}
+			}
 		}
 
-		////////////////////////////
-		// Spawning Stuff - Enemies/bullets
+	////////////////////////////
+	// Spawning Stuff - Enemies/bullets
 
-		// Spawn Bullets
- 		if (player.firedShot)
+	// Spawn Bullets
+		if (player.firedShot)
 		{
 			// Cycle through the bullets to find a bullet that can be shot
 			for (int i = 0; i < 50; ++i)
 			{
 				// if the lifeTime < 0 it's ok to be shot
-				if(bullets[i].lifeTime < 0)
+				if (bullets[i].lifeTime < 0)
 				{
 					// Initiate the bullet
 					InitBullet(bullets[i], player);
 
-					if (pickups[i].isPickedUp)
-						bullets[i].speed += 5;
-					// break from this for loop
+						// break from this for loop
 					break;
 				}
 			}
@@ -244,6 +259,30 @@ bool GameLoop(MainGameLoop &gameLoop)
 			}
 		}
 
+		// Spawn Pickups
+		pickupTimer -= deltaTime;
+
+		// Check to see if pickupTimer is less than 0
+		if (pickupTimer < 0)
+		{
+			// ... if it is, loop through to find pooled pickup that can be spawned
+			for (int i = 0; i < 50; ++i)
+			{
+				// if the pickup is picked up
+				if (pickups[i].isPickedUp)
+				{
+					// Initialize the pickup
+					InitPickup(pickups[i]);
+
+					// Set the pickup spawn timer to the spawn delay time
+					pickupTimer = pickupDelay;
+
+					// break from the loop
+					break;
+				}
+			}
+		}
+
 		// Spawn Explosions between Bullets and Enemies
 		for (int i = 0; i < 50; ++i)
 		{
@@ -251,7 +290,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 			if (enemies[i].playDeath)
 			{
 				// ... loop through to see what explosion in the pool can be used
-				for (int k = 0; k < 50; ++k)
+				for (int k = 0; k < 200; ++k)
 				{
 					// ... if the lifeTime is < 0 it is an unused explosion and can be used
 					if (explosions[k].lifetime < 0)
@@ -265,162 +304,188 @@ bool GameLoop(MainGameLoop &gameLoop)
 					}
 				}
 			}
-		}
 
-		/////////////////////////////
-		// Drawing Stuff - all the things
-		
-		// Cycle through to get an available bullet from the pool
-		for (int i = 0; i < 50; ++i)
-			// if the bullet is available, draw it
-			if (bullets[i].lifeTime >= 0)
-				DrawBullet(bullets[i]);
 
-		// Cycle through the enemies to find one that is available from the pool
-		for (int i = 0; i < 50; ++i)
-			// if the enemy is available, draw it
-			if (enemies[i].isAlive)
-				DrawEnemy(enemies[i]);
+			/////////////////////////////
+			// Drawing Stuff - all the things
 
-		// Cycle though the explosions to find one that is available from the pool
-		for (int i = 0; i < 50; ++i)
-			// if the explosion is available, draw it
-			if (explosions[i].lifetime >= 0)
-				DrawExplosion(explosions[i]);
+			// Cycle through to get an available bullet from the pool
+			for (int i = 0; i < 50; ++i)
+				// if the bullet is available, draw it
+				if (bullets[i].lifeTime >= 0)
+				{
+					DrawBullet(bullets[i]);
+				}
+			// Cycle through the enemies to find one that is available from the pool
+			for (int i = 0; i < 50; ++i)
+				// if the enemy is available, draw it
+				if (enemies[i].isAlive)
+					DrawEnemy(enemies[i]);
 
-		// If the player isn't dead
-		if (!player.isDead)
-		{
-			// Draw the player, player hp, and score
-			DrawPlayer(player);
-			DrawHP(player);
-			DrawScore(player, gameLoop);
-		}
-
-		// If the loss condition is true
-		if (gameLoop.playerLose)
-		{
-			// ... say the game is over
-			gameLoop.gameOver = true;
-			// break from the game loop
-			break;
-		}
-		// If the player hit esc to trigger the quit condition
-		else if (gameLoop.playerQuit)
-		{
-			// ... say the game is over
-			gameLoop.gameOver = true;
-
-			// break from the game loop
-			break;
-		}
-
-	}
-	// return that the game is over
-	return gameLoop.gameOver;
-}
-
-void SaveHighScore(MainGameLoop &gameLoop, string name)
-{
-	fstream highScoreFile;
-	bool endOfFile = false;
-	string buffer;
-	
-	
-
-	LoadHighScore(gameLoop);
-
-	highScoreFile.open("HighScores.txt", std::ios::out);
-
-	if (highScoreFile.is_open())
-	{
-		while (true)
-		{
-			if (gameLoop.playerScore > gameLoop.highScore1)
+			// Cycle through the pickups to find one that is available from the pool
+			for (int i = 0; i < 50; ++i)
 			{
-				gameLoop.highScore2 = gameLoop.highScore1;
-				gameLoop.hsName2 = gameLoop.highScore1;
-
-				gameLoop.highScore1 = gameLoop.playerScore;
-				gameLoop.hsName1 = name;				
+				if (!pickups[i].isPickedUp)
+					DrawPickup(pickups[i]);
 			}
-			else if (gameLoop.playerScore < gameLoop.highScore1 && gameLoop.playerScore > gameLoop.highScore2)
+
+			// Cycle though the explosions to find one that is available from the pool
+			for (int i = 0; i < 200; ++i)
+				// if the explosion is available, draw it
+				if (explosions[i].lifetime >= 0)
+					DrawExplosion(explosions[i]);
+
+			// If the player isn't dead
+			if (!player.isDead)
 			{
-				gameLoop.highScore3 = gameLoop.highScore2;
-				gameLoop.hsName3 = gameLoop.hsName2;
-
-				gameLoop.highScore2 = gameLoop.playerScore;
-				gameLoop.hsName2 = name;
-
+				// Draw the player, player hp, and score
+				DrawPlayer(player);
+				DrawHP(player);
+				DrawScore(player, gameLoop);
 			}
-			else if (gameLoop.playerScore < gameLoop.highScore2 && gameLoop.playerScore > gameLoop.highScore3)
+
+			// If the loss condition is true
+			if (gameLoop.playerLose)
 			{
-				gameLoop.highScore3 = gameLoop.playerScore;
-				gameLoop.hsName3 = name;
+				// ... say the game is over
+				gameLoop.gameOver = true;
+				// break from the game loop
+				break;
 			}
+			// If the player hit esc to trigger the quit condition
+			else if (gameLoop.playerQuit)
+			{
+				// ... say the game is over
+				gameLoop.gameOver = true;
+
+				// break from the game loop
+				break;
+			}
+
 			
-			break;
 		}
-
-		highScoreFile << gameLoop.hsName1 << " " << gameLoop.highScore1 << endl;
-		highScoreFile << gameLoop.hsName2 << " " << gameLoop.highScore2 << endl;
-		highScoreFile << gameLoop.hsName3 << " " << gameLoop.highScore3 << endl;
+	
 	}
+	SetString(55, 35, "YOU LOSE! PRESS A KEY TO CONTINUE!", LIGHT_RED, BLACK);
+	BufferFlip();
+	system("pause");
 
-	highScoreFile.flush();
-	highScoreFile.close();
+// return that the game is over
+return gameLoop.gameOver; 
 }
 
-void LoadHighScore(MainGameLoop &gameLoop)
-{
-	string buffer;
-	string name;
-	string hs;
-	string charSplit;
-	string charActual;
-	fstream highScoreFile;
-
-	int count = 0;
-
-
-	highScoreFile.open("HighScores.txt", std::ios::in);
-
-	if (highScoreFile.is_open())
+// Saves the high scores if applicable
+	void SaveHighScore(MainGameLoop &gameLoop, string name)
 	{
-		while (getline(highScoreFile, buffer))
+		fstream highScoreFile;
+		bool endOfFile = false;
+		string buffer;
+
+
+
+		LoadHighScore(gameLoop);
+
+		highScoreFile.open("HighScores.txt", std::ios::out);
+
+		if (highScoreFile.is_open())
 		{
-			std::istringstream iss(buffer);
-			iss >> name;
-			iss >> hs;
-
-
-			switch (count)
+			while (true)
 			{
-			case 0:
-				gameLoop.hsName1 = name;
-				gameLoop.highScore1 = std::stof(hs);
+				if (gameLoop.playerScore > gameLoop.highScore1)
+				{
+					gameLoop.highScore2 = gameLoop.highScore1;
+					gameLoop.hsName2 = gameLoop.highScore1;
+
+					gameLoop.highScore1 = gameLoop.playerScore;
+					gameLoop.hsName1 = name;
+				}
+				else if (gameLoop.playerScore < gameLoop.highScore1 && gameLoop.playerScore > gameLoop.highScore2)
+				{
+					gameLoop.highScore3 = gameLoop.highScore2;
+					gameLoop.hsName3 = gameLoop.hsName2;
+
+					gameLoop.highScore2 = gameLoop.playerScore;
+					gameLoop.hsName2 = name;
+
+				}
+				else if (gameLoop.playerScore < gameLoop.highScore2 && gameLoop.playerScore > gameLoop.highScore3)
+				{
+					gameLoop.highScore3 = gameLoop.playerScore;
+					gameLoop.hsName3 = name;
+				}
+
 				break;
-			case 1:
-				gameLoop.hsName2 = name;
-				gameLoop.highScore2 = std::stof(hs);
-				break;
-			case 2:
-				gameLoop.hsName3 = name;
-				gameLoop.highScore3 = std::stof(hs);
-				break;
-			default:
-				cout << "Something went wrong!" << endl;
 			}
 
-			count++;
-			name.clear();
-			hs.clear();
+			highScoreFile << gameLoop.hsName1 << " " << gameLoop.highScore1 << endl;
+			highScoreFile << gameLoop.hsName2 << " " << gameLoop.highScore2 << endl;
+			highScoreFile << gameLoop.hsName3 << " " << gameLoop.highScore3 << endl;
 		}
+
+		highScoreFile.flush();
+		highScoreFile.close();
 	}
 
-	highScoreFile.close();
-}
+	// Loads the high scores in from a .txt file
+	void LoadHighScore(MainGameLoop &gameLoop)
+	{
+		string buffer;
+		string name;
+		string hs;
+		string charSplit;
+		string charActual;
+		fstream highScoreFile;
 
+		int count = 0;
+
+		// Opens the file for reading
+		highScoreFile.open("HighScores.txt", std::ios::in);
+
+		// Checks to see if the file is open
+		if (highScoreFile.is_open())
+		{
+			while (getline(highScoreFile, buffer))
+			{
+				// Splits the string into two sections
+				std::istringstream iss(buffer);
+				// This section is put into the name variable
+				iss >> name;
+				// This section is put into the high score variable
+				iss >> hs;
+
+				// Puts the section of data into the appropriate struct variable
+				switch (count)
+				{
+				case 0:
+					gameLoop.hsName1 = name;
+					gameLoop.highScore1 = std::stof(hs);
+					break;
+				case 1:
+					gameLoop.hsName2 = name;
+					gameLoop.highScore2 = std::stof(hs);
+					break;
+				case 2:
+					gameLoop.hsName3 = name;
+					gameLoop.highScore3 = std::stof(hs);
+					break;
+				default:
+					cout << "Something went wrong!" << endl;
+				}
+
+				// Counts up
+				count++;
+
+				// Clears the name and hs strings, prepping them for the next set of data
+				name.clear();
+				hs.clear();
+			}
+		}
+
+		// Closes the file
+		highScoreFile.close();
+	}
+
+// Prints the high scores from the .txt file
 void PrintHighScore()
 {
 	string buffer;

@@ -3,6 +3,7 @@
 #define SCREEN_H
 
 #include <Windows.h>
+#include <string>
 /*
 The following defintions are to be used in the place of the colors
 */
@@ -56,6 +57,8 @@ void SetChar(int x, int y, char c, short foreColor, short backColor);
 
 // Write a strng to an X, Y
 void SetString(int x, int y, const char string[], short foreColor, short backColor);
+
+void SetString(int x, int y, std::string string, short foreColor, short backColor);
 
 
 // Write a strng to an X, Y
