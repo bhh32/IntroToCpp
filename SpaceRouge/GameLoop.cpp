@@ -28,7 +28,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 		cin >> gameLoop.name;
 
 		if (gameLoop.name == " ")
-			cout << "You didn't enter your name, please do so: ";
+			cout << "                                          You didn't enter your name, please do so: ";
 		else
 			break;
 	}
