@@ -32,9 +32,9 @@ void DrawPlayer(Player &player)
 		int trail = player.trail;
 
 		// Draws the Player Ship
-		SetString(player.x + 2, player.y - 2, "u", WHITE, BLACK);
-		SetString(player.x + 2, player.y - 1, "|", WHITE, BLACK);
-		SetString(player.x, player.y, "|-|-|", WHITE, BLACK);
+		SetString(player.x + 2, player.y - 2, "u", LIGHT_CYAN, BLACK);
+		SetString(player.x + 2, player.y - 1, "|", LIGHT_CYAN, BLACK);
+		SetString(player.x, player.y, "|-|-|", LIGHT_CYAN, BLACK);
 
 		// Test if the player is moving forward (up)
 		if (player.thrusting)
@@ -51,26 +51,29 @@ void DrawScore(Player &player, MainGameLoop &gameLoop)
 	
 	std::string playerScoreString = std::to_string(player.score);
 	
-	SetString(130, 1, score, WHITE, BLACK);
-	SetString(137, 1, playerScoreString, WHITE, BLACK);
+	SetString(130, 1, score, LIGHT_YELLOW, BLACK);
+	SetString(137, 1, playerScoreString, LIGHT_YELLOW, BLACK);
 }
 
 void DrawHP(Player &player)
 {
-	char playerHPStr[10] = { "Health: \0" };
+	// Create a char array to hold the lives
 	char playerHealth[2];
 
+	// Define the elements
 	for (int i = 0; i < 2; ++i)
 	{
 		playerHealth[i] = { 0 };
 	}
 
-	if (player.hp < 6)
-	{
-		playerHealth[0] = (char)player.hp + 48;
-		SetString(2, 1, playerHPStr, WHITE, BLACK);
-		SetString(11, 1, playerHealth, WHITE, BLACK);
-	}
+	// Sets the number to the correct number ascii character
+	playerHealth[0] = (char)player.hp + 48;
+
+	// Draws the Lives string
+	SetString(2, 1, "Lives: ", LIGHT_RED, BLACK);
+	
+	// Draws the actual number of lives
+	SetString(9, 1, playerHealth, LIGHT_RED, BLACK);
 }
 
 // Updates the player

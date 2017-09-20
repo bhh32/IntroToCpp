@@ -5,7 +5,7 @@
 // Draws the enemy
 void DrawEnemy(Enemy &enemy)
 {
-	SetChar(enemy.x, enemy.y, '@', WHITE, BLACK );
+	SetChar(enemy.x, enemy.y, '@', LIGHT_GREEN, BLACK );
 }
 
 // Updates the enemy position

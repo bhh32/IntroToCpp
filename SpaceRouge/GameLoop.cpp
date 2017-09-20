@@ -20,9 +20,8 @@ using std::endl;
 
 bool GameLoop(MainGameLoop &gameLoop)
 {
-
+	// Ask for the user's name to be used for the high score
 	cout << "                                                   Before we start the game, What is your name?\n";
-
 	while (true)
 	{
 		cin >> gameLoop.name;
@@ -88,7 +87,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 		ScreenClear(BLACK);
 
 		////////////////////////////////////
-		// Update stuff
+		/* UPDATE EVERYTHING */
 
 		// Set the gameLoops playerScore variable to the players score
 		gameLoop.playerScore = player.score;
@@ -131,7 +130,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 			}
 		}
 		///////////////////////////////////
-		// Check and respond for collision
+		/* CHECK FOR AND RESPOND TO COLLISION */
 
 		// Checks for collions between the enemies and bullets
 		for (int i = 0; i < 50; ++i)
@@ -307,7 +306,7 @@ bool GameLoop(MainGameLoop &gameLoop)
 
 
 			/////////////////////////////
-			// Drawing Stuff - all the things
+			/* DRAW EVERYTHING */
 
 			// Cycle through to get an available bullet from the pool
 			for (int i = 0; i < 50; ++i)
@@ -360,14 +359,19 @@ bool GameLoop(MainGameLoop &gameLoop)
 
 				// break from the game loop
 				break;
-			}
-
-			
-		}
-	
+			}			
+		}	
 	}
+
+	/* AFTER THE GAME LOOP IS OVER */
+
+	// Write the game over message
 	SetString(55, 35, "GAME OVER! PRESS ANY KEY TO CONTINUE!", LIGHT_RED, BLACK);
+	
+	// Flips the buffer to show the game over message
 	BufferFlip();
+
+	// Waits for user input
 	system("pause");
 
 // return that the game is over
@@ -378,15 +382,18 @@ return gameLoop.gameOver;
 	void SaveHighScore(MainGameLoop &gameLoop, string name)
 	{
 		fstream highScoreFile;
-		bool endOfFile = false;
 		string buffer;
 
+		// Loads in any previous high score data
 		LoadHighScore(gameLoop);
 
+		// Opens the file
 		highScoreFile.open("HighScores.txt", std::ios::out);
 
+		// Ensures the file is open
 		if (highScoreFile.is_open())
 		{
+			// Loops until all variables have been filled with the correct data
 			while (true)
 			{
 				if (gameLoop.playerScore > gameLoop.highScore1)
@@ -415,12 +422,16 @@ return gameLoop.gameOver;
 				break;
 			}
 
+			// Saves the data into the file in the correct format
 			highScoreFile << gameLoop.hsName1 << " " << gameLoop.highScore1 << endl;
 			highScoreFile << gameLoop.hsName2 << " " << gameLoop.highScore2 << endl;
 			highScoreFile << gameLoop.hsName3 << " " << gameLoop.highScore3 << endl;
 		}
 
+		// Flush the force writes to the file
 		highScoreFile.flush();
+
+		// Close the file
 		highScoreFile.close();
 	}
 
@@ -430,8 +441,6 @@ return gameLoop.gameOver;
 		string buffer;
 		string name;
 		string hs;
-		string charSplit;
-		string charActual;
 		fstream highScoreFile;
 
 		int count = 0;
@@ -442,6 +451,7 @@ return gameLoop.gameOver;
 		// Checks to see if the file is open
 		if (highScoreFile.is_open())
 		{
+			// Loops until all lines of data have been read into the buffer string variable
 			while (getline(highScoreFile, buffer))
 			{
 				// Splits the string into two sections
@@ -489,15 +499,19 @@ void PrintHighScore()
 	string buffer;
 	fstream highScoreFile;
 
+	// Opens the file
 	highScoreFile.open("HighScores.txt");
 
+	// Checks to ensure the file was opened
 	if (highScoreFile.is_open())
 	{
+		// Loops through each line in the file and prints it to the console
 		while (getline(highScoreFile, buffer))
 		{
 			cout << buffer << endl;
 		}
 	}
 
+	// Closes the file
 	highScoreFile.close();
 }

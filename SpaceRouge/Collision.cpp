@@ -14,6 +14,7 @@ bool EnemyBulletCollision(Enemy &enemy, Bullet &bullet)
 	return rad2 < 2;
 }
 
+// Returns if there was a collision between a pickup and the player
 bool PlayerPickupCollision(Player &player, Pickup &pickup)
 {
 	float rad2 = (player.x + 2 - pickup.x) * (player.x + 2 - pickup.x) + (player.y - pickup.y) * (player.y - pickup.y);

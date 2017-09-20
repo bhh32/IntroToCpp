@@ -8,9 +8,13 @@ void UpdateBullet(Bullet &bullet, Player &player, float deltaTime)
 	// Checks to see if the bullet isn't dead
 	if (bullet.lifeTime >= 0)
 	{
+		// Checks to see if the player collided with a pickup
 		if (player.pickupCollide)
 		{
+			// Adds 2 to the fireRate (for bullet speed)
 			player.fireRate += 2.f;
+
+			// Sets the pickupCollide flag back to false
 			player.pickupCollide = false;
 		}
 
@@ -32,6 +36,7 @@ void InitBullet(Bullet &currentBullet, Player &player)
 	currentBullet.beenshot = true;
 	currentBullet.speed = player.fireRate + 12;
 
+	// Caps the bullets speed
 	if (currentBullet.speed > 25.0f)
 		currentBullet.speed = 25.f;
 }
@@ -42,5 +47,5 @@ void DrawBullet(Bullet &currentBullet)
 	// Ensures the bullet isn't dead when it's drawn
 	if (currentBullet.lifeTime >= 0)
 		// Draws the bullet in the updated position
-		SetChar(currentBullet.x, currentBullet.y, '|', WHITE, BLACK);
+		SetChar(currentBullet.x, currentBullet.y, '|', LIGHT_BLUE, BLACK);
 }

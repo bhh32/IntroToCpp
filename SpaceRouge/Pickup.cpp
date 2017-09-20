@@ -5,7 +5,7 @@
 // Draws the pickup
 void DrawPickup(Pickup &pickup)
 {
-	SetChar(pickup.x, pickup.y, '$', WHITE, BLACK);
+	SetString(pickup.x, pickup.y, "PICKUP", LIGHT_MAGENTA, BLACK);
 }
 
 // Updates the pickup position

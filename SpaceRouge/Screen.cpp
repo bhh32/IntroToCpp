@@ -116,6 +116,7 @@ void SetString(int x, int y, const char string[], short foreColor, short backCol
 	WriteConsoleOutputA(buffers[writeBuffer], chi, { len,1 }, { 0,0 }, &rect);
 }
 
+// Overload of the SetString Function above to take in a string instead of char array
 void SetString(int x, int y, std::string string, short foreColor, short backColor)
 {
 	// Ensures the screen buffers are initialized, if they aren't the program quits.

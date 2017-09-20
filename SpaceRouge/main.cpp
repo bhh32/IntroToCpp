@@ -27,20 +27,26 @@ int main(void)
 
 	while (true)
 	{
+		// Clear the screen from any previous menu
 		system("cls");
 		
-
+		// If the player loses
 		if (gameLoop.playerLose)
 		{
+			// Clear the screen
 			cin.clear();
+			// Call the LoseScreen Function
 			LoseScreen(gameLoop);
 		}
+		// If the player quit
 		else if (gameLoop.playerQuit)
 		{
-			cin.clear();
+			// Clear the screen
 			system("cls");
+			// Call the QuitScreen Function
 			QuitScreen(gameLoop);
 		}
+		// Draw the Main Menu and receive player input
 		else
 		{
 			char yesNo;
@@ -88,6 +94,7 @@ int main(void)
 						The following basically turns off the double buffering to allow for normal console operation. This 
 						solves the problem of screen flickering and/or nothing showing on the screen after exiting the game loop.
 					*/
+
 					// Sets the double buffer HANDLEs to NULL
 					ScreenBufferClear();
 					
@@ -106,21 +113,31 @@ int main(void)
 					//SaveHighScore(gameLoop, gameLoop.name);
 
 				}
+				// Player chooses to quit
 				else if (yesNo == 'q' || yesNo == 'Q')
 				{
+					// Clear the input char
 					yesNo = ' ';
+					// Call the QuitScreen Function
 					QuitScreen(gameLoop);
 				}
+				// Player chooses to see the credits
 				else if (yesNo == 'c' || yesNo == 'C')
 				{
+					// Clears the input char
 					yesNo = ' ';
+					// Call the Credits Function
 					Credits();
 				}
+				// Player Chooses to see the high scores
 				else if (yesNo == 'h' || yesNo == 'H')
 				{
+					// Clears the input char
 					yesNo = ' ';
+					// Calls the HighScores Function
 					HighScores(gameLoop);
 				}
+				// Player Didn't make a valid choice
 				else
 				{
 					cout << "You didn't make a valid choice, try again!\n";
@@ -134,6 +151,7 @@ int main(void)
 	}
 }
 
+// Shows the Credits of the game
 void Credits()
 {
 	system("cls");
@@ -166,6 +184,7 @@ void Credits()
 
 }
 
+// Shows the game high scores
 void HighScores(MainGameLoop &gameLoop)
 {
 	system("cls");
@@ -197,6 +216,7 @@ void HighScores(MainGameLoop &gameLoop)
 	}
 }
 
+// Shows the loss screen
 void LoseScreen(MainGameLoop &gameLoop)
 {
 	
@@ -232,6 +252,7 @@ void LoseScreen(MainGameLoop &gameLoop)
 	}
 }
 
+// Shows the quit screen
 void QuitScreen(MainGameLoop &gameLoop)
 {
 	system("cls");
